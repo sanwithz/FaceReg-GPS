@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ระบบเช็คชื่อและบันทึกเวลา + GPS ด้วยใบหน้า</title>
+    <title>ระบบลงเวลาปฏิบัติราชการครู + GPS ด้วยใบหน้า AI | รร.บ้านทุ่งขาม สพป.เพชรบุรี เขต 2</title>
 
     <!-- Google Fonts: Sarabun -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -210,7 +210,7 @@
 <body>
 
 <!-- ======================================================================
-     1. LOGIN SECTION (แยกสิทธิ์ Admin, ครู, นักเรียน + สแกนใบหน้า Login)
+     1. LOGIN SECTION (แยกสิทธิ์ Admin, หัวหน้าฝ่ายบุคคล, ผู้บริหาร, ครู)
      ====================================================================== -->
 <section id="loginSection" class="min-h-screen flex items-center justify-center p-4 bg-[#f1f5f9]">
     <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-200/80 w-full max-w-md overflow-hidden animate__animated animate__fadeInUp">
@@ -221,8 +221,13 @@
                 <span id="apiStatusLabel">ตั้งค่า API</span>
             </button>
 
-            <h1 class="text-2xl mt-12 font-extrabold tracking-tight">ระบบเช็คชื่อและบันทึกเวลา + GPS</h1>
-            <p class="text-indigo-100 text-sm mt-1 font-medium">Time Attendance with GPS via Face Recognition</p>
+            <h1 class="text-2xl mt-10 font-extrabold tracking-tight">ระบบลงเวลาปฏิบัติราชการครู + GPS</h1>
+            <p class="text-indigo-100 text-sm mt-1 font-bold">รร.บ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี สพป.เพชรบุรี เขต 2</p>
+            <div class="mt-3 inline-flex flex-wrap items-center justify-center gap-1.5 bg-white/15 px-3 py-1 rounded-full text-[11px] font-bold text-indigo-50">
+                <span><i class="fa-regular fa-clock mr-1"></i>เช้า 06:30 - 08:00 น.</span>
+                <span>•</span>
+                <span>เย็น 16:30 น. เป็นต้นไป</span>
+            </div>
         </div>
 
         <!-- Login Body -->
@@ -235,18 +240,22 @@
                     </span>
                     <span class="text-[11px] font-bold text-amber-700">รหัสผ่าน: pass123</span>
                 </div>
-                <div class="grid grid-cols-3 gap-2">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     <button type="button" onclick="quickFillLogin('ADM001', 'pass123')" class="bg-white hover:bg-indigo-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
                         <div class="text-xs font-extrabold text-indigo-700">Admin</div>
                         <div class="text-[10px] text-slate-500 font-bold">ADM001</div>
                     </button>
-                    <button type="button" onclick="quickFillLogin('EMP001', 'pass123')" class="bg-white hover:bg-emerald-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
-                        <div class="text-xs font-extrabold text-emerald-700">ครูอาจารย์</div>
-                        <div class="text-[10px] text-slate-500 font-bold">EMP001</div>
+                    <button type="button" onclick="quickFillLogin('HR001', 'pass123')" class="bg-white hover:bg-violet-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
+                        <div class="text-xs font-extrabold text-violet-700">หน.ฝ่ายบุคคล</div>
+                        <div class="text-[10px] text-slate-500 font-bold">HR001</div>
                     </button>
-                    <button type="button" onclick="quickFillLogin('STD001', 'pass123')" class="bg-white hover:bg-sky-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
-                        <div class="text-xs font-extrabold text-sky-700">นักเรียน</div>
-                        <div class="text-[10px] text-slate-500 font-bold">STD001</div>
+                    <button type="button" onclick="quickFillLogin('DIR001', 'pass123')" class="bg-white hover:bg-emerald-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
+                        <div class="text-xs font-extrabold text-emerald-700">ผู้บริหาร</div>
+                        <div class="text-[10px] text-slate-500 font-bold">DIR001</div>
+                    </button>
+                    <button type="button" onclick="quickFillLogin('TCH001', 'pass123')" class="bg-white hover:bg-sky-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
+                        <div class="text-xs font-extrabold text-sky-700">ครู</div>
+                        <div class="text-[10px] text-slate-500 font-bold">TCH001</div>
                     </button>
                 </div>
             </div>
@@ -254,10 +263,10 @@
             <!-- Login Form -->
             <form id="loginForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">รหัสประจำตัว (Admin / ครู / นักเรียน)</label>
+                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">รหัสประจำตัว (Admin / หัวหน้าฝ่ายบุคคล / ผู้บริหาร / ครู)</label>
                     <div class="relative">
                         <i class="fa-solid fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                        <input type="text" id="loginId" required autocomplete="username" placeholder="เช่น ADM001, EMP001, STD001"
+                        <input type="text" id="loginId" required autocomplete="username" placeholder="เช่น ADM001, HR001, DIR001, TCH001"
                             class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition">
                     </div>
                 </div>
@@ -275,7 +284,7 @@
                 </button>
             </form>
 <div style="display:none">
-            <div class="relative my-5 text-center" >
+            <div class="relative my-5 text-center">
                 <div class="border-t border-slate-200"></div>
                 <span class="bg-white px-3 text-xs font-bold text-slate-400 -top-2.5 relative">หรือเข้าสู่ระบบด้วย AI</span>
             </div>
@@ -284,12 +293,10 @@
             <button type="button" onclick="openFaceLoginModal()" class="w-full py-3 bg-slate-900 hover:bg-black text-white font-bold rounded-xl transition flex items-center justify-center gap-2 text-sm shadow">
                 <i class="fa-solid fa-face-viewfinder text-emerald-400 text-lg"></i> สแกนใบหน้าเพื่อเข้าสู่ระบบ (AI Face Login)
             </button>
-
-            <p class="text-center text-[11px] text-slate-400 font-bold mt-6">
-                พัฒนาโดย <span class="text-indigo-600">สื่อและนวัตกรรมครูสิทธิชาติ</span>
-            </p>
-
 </div>
+            <p class="text-center text-[11px] text-slate-400 font-bold mt-6">
+                รร.บ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี • <span class="text-indigo-600">สพป.เพชรบุรี เขต 2</span>
+            </p>
         </div>
     </div>
 </section>
@@ -304,11 +311,11 @@
             <!-- Brand -->
             <div class="flex items-center gap-3 px-2 py-3 mb-6 border-b border-slate-100">
                 <div class="w-12 h-12 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-xl shadow-md shadow-indigo-200 shrink-0">
-                    <i class="fa-solid fa-location-crosshairs"></i>
+                    <i class="fa-solid fa-school"></i>
                 </div>
                 <div>
-                    <h2 class="font-extrabold text-slate-900 text-base leading-tight">GPS + Face AI</h2>
-                    <p class="text-[11px] font-bold text-indigo-600">Time Attendance System</p>
+                    <h2 class="font-extrabold text-slate-900 text-sm leading-tight">รร.บ้านทุ่งขาม</h2>
+                    <p class="text-[11px] font-bold text-indigo-600">สพป.เพชรบุรี เขต 2</p>
                 </div>
             </div>
 
@@ -330,7 +337,7 @@
             <nav class="space-y-1.5" id="sidebarNav">
                 <div class="nav-item active" data-tab="dashboard" onclick="switchTab('dashboard')">
                     <i class="fa-solid fa-map-location-dot"></i>
-                    <span>ลงเวลา & แผนที่ GPS</span>
+                    <span>ลงเวลาครู & แผนที่ GPS</span>
                 </div>
                 <div class="nav-item role-admin-teacher" data-tab="admin" onclick="switchTab('admin')">
                     <i class="fa-solid fa-chart-pie"></i>
@@ -342,7 +349,7 @@
                 </div>
                 <div class="nav-item" data-tab="users" onclick="switchTab('users')">
                     <i class="fa-solid fa-user-check"></i>
-                    <span id="navUsersLabel">ทะเบียนผู้ใช้ & ใบหน้า AI</span>
+                    <span id="navUsersLabel">ทะเบียนครู & ใบหน้า AI</span>
                 </div>
                 <div class="nav-item role-admin-teacher" data-tab="reports" onclick="switchTab('reports')">
                     <i class="fa-solid fa-file-excel"></i>
@@ -364,7 +371,7 @@
             <button onclick="logout()" class="w-full py-2.5 px-4 rounded-xl bg-rose-50 hover:bg-rose-500 text-rose-600 hover:text-white font-extrabold text-xs flex items-center justify-center gap-2 transition">
                 <i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ
             </button>
-            <p class="text-[10px] text-center text-slate-400 font-bold pt-1">สื่อและนวัตกรรมครูสิทธิชาติ</p>
+            <p class="text-[10px] text-center text-slate-400 font-bold pt-1">รร.บ้านทุ่งขาม สพป.เพชรบุรี เขต 2</p>
         </div>
     </aside>
 
@@ -377,7 +384,7 @@
                     <i class="fa-solid fa-bars text-lg"></i>
                 </button>
                 <div>
-                    <h1 id="pageTitle" class="text-lg md:text-xl font-extrabold text-slate-900">ลงเวลาเข้า-ออก & แผนที่พิกัด GPS</h1>
+                    <h1 id="pageTitle" class="text-lg md:text-xl font-extrabold text-slate-900">ระบบลงเวลาปฏิบัติราชการครู (รร.บ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี)</h1>
                     <p id="clockDate" class="text-xs text-slate-500 font-medium">กำลังโหลดวันที่...</p>
                 </div>
             </div>
@@ -395,7 +402,7 @@
                     <span id="clockTime" class="font-extrabold text-indigo-900 text-sm tabular-nums">00:00:00</span>
                 </div>
 
-                <!-- Quick Config Button for Admin -->
+                <!-- Quick Config Button for Admin / HR -->
                 <button id="btnHeaderConfig" onclick="openQuickConfigModal()" class="hidden bg-slate-800 hover:bg-slate-900 text-white px-3.5 py-2 rounded-xl text-xs font-bold items-center gap-1.5 transition shadow-sm">
                     <i class="fa-solid fa-gear"></i> ตั้งค่าระยะห่าง/เวลา
                 </button>
@@ -414,26 +421,29 @@
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
                             <h3 class="text-base md:text-lg font-extrabold text-slate-900 flex items-center gap-2">
                                 <i class="fa-solid fa-clock text-indigo-600"></i>
-                                สถานะการลงเวลาวันนี้
+                                สถานะการลงเวลาปฏิบัติราชการวันนี้
                             </h3>
-                            <div class="flex items-center gap-2 text-xs font-bold">
+                            <div class="flex flex-wrap items-center gap-1.5 text-xs font-bold">
                                 <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full">
-                                    <i class="fa-solid fa-ruler-horizontal mr-1"></i> ระยะอนุญาตไม่เกิน <strong id="limitDisplay">120</strong> ม.
+                                    <i class="fa-solid fa-ruler-horizontal mr-1"></i> รัศมีไม่เกิน <strong id="limitDisplay">200</strong> ม.
+                                </span>
+                                <span class="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full">
+                                    <i class="fa-solid fa-sun mr-1"></i> เช้า <strong id="morningWindowDisplay">06:30 - 08:00</strong> น.
                                 </span>
                                 <span class="bg-rose-50 text-rose-700 px-3 py-1 rounded-full">
-                                    <i class="fa-solid fa-bell mr-1"></i> ตัดสายหลัง <strong id="cutoffDisplay">08:00</strong> น.
+                                    <i class="fa-solid fa-moon mr-1"></i> เย็น <strong id="eveningWindowDisplay">16:30</strong> น. เป็นต้นไป
                                 </span>
                             </div>
                         </div>
 
-                        <!-- 3 Status Cards (เวลาเข้า / เวลาออก / สถานะ) -->
+                        <!-- 3 Status Cards (เวลาเข้าเช้า / เวลากลับเย็น / สถานะ) -->
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                             <div class="bg-emerald-50/70 border border-emerald-100 p-4 rounded-2xl flex items-center gap-3.5">
                                 <div class="w-12 h-12 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-xl shrink-0 shadow-sm">
                                     <i class="fa-solid fa-right-to-bracket"></i>
                                 </div>
                                 <div>
-                                    <div class="text-xs font-bold text-emerald-800">เวลาเข้า (Check-in)</div>
+                                    <div class="text-xs font-bold text-emerald-800">เวลาเข้าเช้า (06:30-08:00)</div>
                                     <div id="timeIn" class="text-xl font-extrabold text-slate-900 tabular-nums">-</div>
                                 </div>
                             </div>
@@ -443,7 +453,7 @@
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </div>
                                 <div>
-                                    <div class="text-xs font-bold text-rose-800">เวลาออก (Check-out)</div>
+                                    <div class="text-xs font-bold text-rose-800">เวลากลับเย็น (16:30+)</div>
                                     <div id="timeOut" class="text-xl font-extrabold text-slate-900 tabular-nums">-</div>
                                 </div>
                             </div>
@@ -487,9 +497,9 @@
 
                         <!-- Activity Selector -->
                         <div class="mb-5">
-                            <label class="block text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-1.5">เลือกประเภทการลงเวลา / กิจกรรม</label>
+                            <label class="block text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-1.5">เลือกประเภทการลงเวลาปฏิบัติราชการ</label>
                             <select id="personalActivitySelect" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 font-bold text-slate-800 focus:outline-none focus:border-indigo-600">
-                                <option value="ลงเวลาประจำวัน">ลงเวลาประจำวัน (Check-in / Check-out)</option>
+                                <option value="ลงเวลาปฏิบัติราชการปกติ">ลงเวลาปฏิบัติราชการปกติ (เช้า 06:30-08:00 / เย็น 16:30+)</option>
                             </select>
                         </div>
                     </div>
@@ -498,11 +508,11 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
                         <button id="btnCheckIn" onclick="startPersonalFaceAction('checkin')" class="py-4 px-5 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-extrabold rounded-2xl shadow-lg shadow-emerald-100 transition flex items-center justify-center gap-2.5 text-base">
                             <i class="fa-solid fa-face-viewfinder text-xl"></i>
-                            <span>สแกนใบหน้าลงเวลาเข้า</span>
+                            <span>สแกนใบหน้าลงเวลาเช้า</span>
                         </button>
                         <button id="btnCheckOut" onclick="startPersonalFaceAction('checkout')" disabled class="py-4 px-5 bg-rose-500 hover:bg-rose-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-extrabold rounded-2xl shadow-lg shadow-rose-100 transition flex items-center justify-center gap-2.5 text-base">
                             <i class="fa-solid fa-right-from-bracket text-xl"></i>
-                            <span>สแกนใบหน้าลงเวลาออก</span>
+                            <span>สแกนใบหน้าลงเวลาเย็น</span>
                         </button>
                     </div>
                 </div>
@@ -515,7 +525,7 @@
                                 <i class="fa-solid fa-camera text-indigo-600"></i>
                                 กล้องยืนยันตัวตนด้วยใบหน้า AI
                             </h3>
-                            <p id="personalCamSub" class="text-xs text-slate-500 font-medium">กดปุ่มลงเวลาเข้า หรือ ลงเวลาออก เพื่อเปิดกล้องสแกนใบหน้า</p>
+                            <p id="personalCamSub" class="text-xs text-slate-500 font-medium">กดปุ่มลงเวลาเช้า (06:30-08:00 น.) หรือลงเวลาเย็น (16:30 น.+) เพื่อสแกนใบหน้า</p>
                         </div>
                         <button id="btnStopPersonalCam" onclick="stopVideo()" class="hidden px-3 py-1.5 bg-rose-100 text-rose-700 rounded-xl text-xs font-extrabold">
                             ปิดกล้อง
@@ -550,10 +560,10 @@
                     <div>
                         <h3 class="text-base md:text-lg font-extrabold text-slate-900 flex items-center gap-2">
                             <i class="fa-solid fa-map-marked-alt text-indigo-600"></i>
-                            แผนที่แสดงพิกัดปัจจุบัน ขอบเขตพื้นที่ลงเวลา และจุดพิกัดผู้ลงเวลาแบบ Live
+                            แผนที่พิกัด รร.บ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี (สพป.เพชรบุรี เขต 2) แบบ Live
                         </h3>
                         <p class="text-xs text-slate-500 font-medium">
-                            พิกัดจุดเช็คอิน (โรงเรียน): Lat <strong id="schoolLatLabel">-</strong>, Lon <strong id="schoolLonLabel">-</strong>
+                            พิกัดจุดเช็คอิน (โรงเรียนบ้านทุ่งขาม): Lat <strong id="schoolLatLabel">-</strong>, Lon <strong id="schoolLonLabel">-</strong>
                             | รัศมีวงกลมสีเขียว = พื้นที่อนุญาตให้ลงเวลาได้
                         </p>
                     </div>
@@ -573,7 +583,7 @@
             <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/80">
                 <h3 class="text-base md:text-lg font-extrabold text-slate-900 flex items-center gap-2 mb-5">
                     <i class="fa-solid fa-chart-simple text-indigo-600"></i>
-                    สถิติการลงเวลาส่วนตัว & ประวัติล่าสุด
+                    สถิติการลงเวลาปฏิบัติราชการส่วนตัว & ประวัติล่าสุด
                 </h3>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
@@ -626,9 +636,9 @@
                         <thead>
                             <tr class="bg-slate-50 text-slate-600 text-xs uppercase font-extrabold border-b border-slate-200">
                                 <th class="py-3.5 px-4">วันที่</th>
-                                <th class="py-3.5 px-4">กิจกรรม</th>
-                                <th class="py-3.5 px-4">เวลาเข้า</th>
-                                <th class="py-3.5 px-4">เวลาออก</th>
+                                <th class="py-3.5 px-4">ประเภทการลงเวลา</th>
+                                <th class="py-3.5 px-4">เวลาเข้า (เช้า)</th>
+                                <th class="py-3.5 px-4">เวลากลับ (เย็น)</th>
                                 <th class="py-3.5 px-4">ระยะห่าง GPS</th>
                                 <th class="py-3.5 px-4">สถานะ</th>
                             </tr>
@@ -650,21 +660,21 @@
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 flex items-center gap-4">
                     <div class="w-13 h-13 p-3.5 rounded-2xl bg-indigo-50 text-indigo-600 text-2xl"><i class="fa-solid fa-users"></i></div>
                     <div>
-                        <div class="text-xs font-bold text-slate-400 uppercase">บุคลากร/นักเรียนรวม</div>
+                        <div class="text-xs font-bold text-slate-400 uppercase">ครูและบุคลากรรวม</div>
                         <div id="statAllUsers" class="text-2xl md:text-3xl font-extrabold text-slate-900">0</div>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 border-l-4 border-l-emerald-500 flex items-center gap-4">
                     <div class="w-13 h-13 p-3.5 rounded-2xl bg-emerald-50 text-emerald-600 text-2xl"><i class="fa-solid fa-user-check"></i></div>
                     <div>
-                        <div class="text-xs font-bold text-emerald-600 uppercase">มาปกติ (ทันเวลา)</div>
+                        <div class="text-xs font-bold text-emerald-600 uppercase">มาปกติ (06:30-08:00)</div>
                         <div id="statNormal" class="text-2xl md:text-3xl font-extrabold text-emerald-600">0</div>
                     </div>
                 </div>
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-200/80 border-l-4 border-l-rose-500 flex items-center gap-4">
                     <div class="w-13 h-13 p-3.5 rounded-2xl bg-rose-50 text-rose-600 text-2xl"><i class="fa-solid fa-user-clock"></i></div>
                     <div>
-                        <div class="text-xs font-bold text-rose-600 uppercase">มาสาย (หลังเกณฑ์)</div>
+                        <div class="text-xs font-bold text-rose-600 uppercase">มาสาย (หลัง 08:00)</div>
                         <div id="statLate" class="text-2xl md:text-3xl font-extrabold text-rose-600">0</div>
                     </div>
                 </div>
@@ -684,7 +694,7 @@
                     <div>
                         <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2 mb-1">
                             <i class="fa-solid fa-chart-pie text-indigo-600"></i>
-                            กราฟสรุปสัดส่วนการลงเวลาวันนี้
+                            กราฟสรุปสัดส่วนการลงเวลาครูวันนี้
                         </h3>
                         <p class="text-xs text-slate-500 font-medium mb-4">เปรียบเทียบ มาปกติ / มาสาย / ยังไม่ลงชื่อ แบบ Real-time</p>
                     </div>
@@ -699,13 +709,14 @@
                     <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                         <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
                             <i class="fa-solid fa-list-check text-indigo-600"></i>
-                            สรุปสถานะรายบุคคลวันนี้ (Real-time)
+                            สรุปสถานะครูและบุคลากรวันนี้ (Real-time)
                         </h3>
                         <div class="flex items-center gap-2 flex-wrap">
                             <select id="adminRoleFilter" onchange="renderAdminTable()" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold">
-                                <option value="all">ทุกสิทธิ์ (Admin/ครู/นักเรียน)</option>
+                                <option value="all">ทุกสิทธิ์ (Admin / หน.ฝ่ายบุคคล / ผู้บริหาร / ครู)</option>
                                 <option value="ครู">เฉพาะครู</option>
-                                <option value="นักเรียน">เฉพาะนักเรียน</option>
+                                <option value="ผู้บริหาร">เฉพาะผู้บริหาร</option>
+                                <option value="หัวหน้าฝ่ายบุคคล">เฉพาะหัวหน้าฝ่ายบุคคล</option>
                                 <option value="Admin">เฉพาะ Admin</option>
                             </select>
                             <select id="adminStatusFilter" onchange="renderAdminTable()" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs font-bold">
@@ -722,9 +733,9 @@
                             <thead class="sticky top-0 bg-slate-50 text-slate-600 text-xs uppercase font-extrabold border-b border-slate-200">
                                 <tr>
                                     <th class="py-3 px-4">ชื่อ-สกุล</th>
-                                    <th class="py-3 px-3">สิทธิ์/ชั้น</th>
-                                    <th class="py-3 px-3">เวลาเข้า</th>
-                                    <th class="py-3 px-3">เวลาออก</th>
+                                    <th class="py-3 px-3">สิทธิ์ / กลุ่มสาระฯ</th>
+                                    <th class="py-3 px-3">เวลาเช้า</th>
+                                    <th class="py-3 px-3">เวลาเย็น</th>
                                     <th class="py-3 px-3">ระยะ GPS</th>
                                     <th class="py-3 px-3">สถานะ</th>
                                 </tr>
@@ -737,7 +748,7 @@
         </div>
 
         <!-- ==================================================================
-             TAB 3: จุดสแกนใบหน้าต่อเนื่อง KIOSK MODE (สำหรับจุดเช็คชื่อหน้าโรงเรียน/ห้องเรียน)
+             TAB 3: จุดสแกนใบหน้าต่อเนื่อง KIOSK MODE (สำหรับจุดลงเวลาหน้าโรงเรียน)
              ================================================================== -->
         <div id="tab-kiosk" class="tab-pane hidden">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -746,12 +757,12 @@
                         <div>
                             <label class="block text-[11px] font-extrabold text-slate-400 uppercase mb-1">โหมดการบันทึก</label>
                             <select id="kioskModeSelect" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 font-bold text-slate-800">
-                                <option value="checkin">บันทึกเวลาเข้า (Check-in)</option>
-                                <option value="checkout">บันทึกเวลาออก (Check-out)</option>
+                                <option value="checkin">ลงเวลาเช้า (06:30 - 08:00 น.)</option>
+                                <option value="checkout">ลงเวลาเย็น (16:30 น. เป็นต้นไป)</option>
                             </select>
                         </div>
                         <div>
-                            <label class="block text-[11px] font-extrabold text-slate-400 uppercase mb-1">เลือกกิจกรรม</label>
+                            <label class="block text-[11px] font-extrabold text-slate-400 uppercase mb-1">เลือกประเภทการลงเวลา</label>
                             <select id="activitySelect" onchange="updateLiveLogByActivity()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 font-bold text-slate-800"></select>
                         </div>
                         <div class="flex items-end gap-2">
@@ -774,7 +785,7 @@
                         </div>
                         <div id="videoPlaceholder" class="absolute inset-0 flex flex-col items-center justify-center text-slate-400 bg-slate-900">
                             <i class="fa-solid fa-camera-retro text-5xl mb-3 opacity-30 text-white"></i>
-                            <p class="text-sm font-bold text-slate-300">กดปุ่ม "เริ่มสแกนต่อเนื่อง" เพื่อเปิดจุดสแกนใบหน้า AI</p>
+                            <p class="text-sm font-bold text-slate-300">กดปุ่ม "เริ่มสแกนต่อเนื่อง" เพื่อเปิดจุดลงเวลาด้วยใบหน้า AI</p>
                         </div>
                     </div>
                 </div>
@@ -790,7 +801,7 @@
         </div>
 
         <!-- ==================================================================
-             TAB 4: ทะเบียนผู้ใช้ & ลงทะเบียนใบหน้า AI 5 มิติ (Users & Multi-Shot Face ID)
+             TAB 4: ทะเบียนครูและบุคลากร & ลงทะเบียนใบหน้า AI 5 มิติ
              ================================================================== -->
         <div id="tab-users" class="tab-pane hidden">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -798,14 +809,14 @@
                 <div class="lg:col-span-5 bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80">
                     <h3 class="text-base font-extrabold text-indigo-600 flex items-center gap-2 mb-4">
                         <i class="fa-solid fa-face-viewfinder"></i>
-                        ลงทะเบียนผู้ใช้ & สแกนใบหน้า AI (5 มิติ)
+                        ลงทะเบียนครู/บุคลากร & สแกนใบหน้า AI (5 มิติ)
                     </h3>
 
                     <form id="regForm" class="space-y-3.5" onsubmit="event.preventDefault();">
                         <div class="grid grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-bold text-slate-500 mb-1">รหัสประจำตัว *</label>
-                                <input type="text" id="regId" placeholder="เช่น STD004, EMP003" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-bold text-sm">
+                                <input type="text" id="regId" placeholder="เช่น TCH004, HR002" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-bold text-sm">
                             </div>
                             <div>
                                 <label class="block text-[11px] font-bold text-slate-500 mb-1">รหัสผ่าน (Password)</label>
@@ -822,17 +833,18 @@
                             <div>
                                 <label class="block text-[11px] font-bold text-slate-500 mb-1">สิทธิ์การใช้งาน</label>
                                 <select id="regRole" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-bold text-sm">
-                                    <option value="นักเรียน">นักเรียน</option>
                                     <option value="ครู">ครู</option>
+                                    <option value="ผู้บริหาร">ผู้บริหาร</option>
+                                    <option value="หัวหน้าฝ่ายบุคคล">หัวหน้าฝ่ายบุคคล</option>
                                     <option value="Admin">Admin</option>
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[11px] font-bold text-slate-500 mb-1">ชั้นเรียน/แผนก</label>
-                                <input type="text" id="regClass" placeholder="เช่น ม.4/1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-bold text-sm">
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1">ตำแหน่ง / กลุ่มสาระฯ</label>
+                                <input type="text" id="regClass" placeholder="เช่น กลุ่มสาระฯ ภาษาไทย" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-bold text-sm">
                             </div>
                             <div>
-                                <label class="block text-[11px] font-bold text-slate-500 mb-1">เลขที่</label>
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1">ลำดับที่</label>
                                 <input type="number" id="regNo" placeholder="1" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-bold text-sm">
                             </div>
                         </div>
@@ -856,9 +868,9 @@
                 <div class="lg:col-span-7 bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden flex flex-col">
                     <div class="p-6 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3 bg-slate-50/60">
                         <h3 class="font-extrabold text-slate-900 text-base">
-                            ฐานข้อมูลผู้ใช้งานและใบหน้า AI <span id="studentTotalText" class="text-indigo-600">(0)</span>
+                            ฐานข้อมูลครูและบุคลากร รร.บ้านทุ่งขาม <span id="studentTotalText" class="text-indigo-600">(0)</span>
                         </h3>
-                        <input type="text" placeholder="ค้นหาชื่อ / รหัส / ชั้น..." onkeyup="filterStudentList(this.value)"
+                        <input type="text" placeholder="ค้นหาชื่อ / รหัส / กลุ่มสาระ..." onkeyup="filterStudentList(this.value)"
                             class="w-full sm:w-64 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold">
                     </div>
                     <div class="overflow-x-auto p-4 flex-1">
@@ -867,7 +879,7 @@
                                 <tr class="text-[11px] font-extrabold text-slate-400 uppercase border-b border-slate-100">
                                     <th class="py-3 px-3">รหัส</th>
                                     <th class="py-3 px-3">ชื่อ-นามสกุล</th>
-                                    <th class="py-3 px-3">สิทธิ์ / ชั้น</th>
+                                    <th class="py-3 px-3">สิทธิ์ / กลุ่มสาระฯ</th>
                                     <th class="py-3 px-3">ใบหน้า AI</th>
                                     <th class="py-3 px-3 text-center">จัดการ</th>
                                 </tr>
@@ -897,9 +909,9 @@
                     <input type="month" id="repMonth" onchange="renderReport()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 font-bold hidden">
                 </div>
                 <div class="w-full sm:w-52">
-                    <label class="text-[11px] font-extrabold text-slate-500 uppercase mb-1 block">กรองตามกิจกรรม</label>
+                    <label class="text-[11px] font-extrabold text-slate-500 uppercase mb-1 block">กรองตามประเภทการลงเวลา</label>
                     <select id="repAct" onchange="renderReport()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 font-bold">
-                        <option value="all">ทุกกิจกรรม</option>
+                        <option value="all">ทุกประเภท</option>
                     </select>
                 </div>
                 <div class="flex gap-2 w-full sm:w-auto">
@@ -915,13 +927,14 @@
             <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 overflow-x-auto">
                 <!-- Daily Report View -->
                 <div id="dailyReportView">
-                    <h2 class="text-center text-xl font-extrabold text-slate-900 mb-1">รายงานสรุปผลการเช็คชื่อและบันทึกเวลา</h2>
+                    <h2 class="text-center text-xl font-extrabold text-slate-900 mb-1">รายงานสรุปผลการลงเวลาปฏิบัติราชการครูและบุคลากร</h2>
+                    <p class="text-center text-xs font-extrabold text-indigo-600 mb-1">โรงเรียนบ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี (สพป.เพชรบุรี เขต 2)</p>
                     <p id="exportSubHeader" class="text-center text-xs font-bold text-slate-500 mb-6"></p>
 
                     <table class="w-full text-center border-collapse border border-slate-200 text-sm font-bold mb-8" id="summaryTable">
                         <thead class="bg-slate-50 text-xs uppercase text-slate-600">
                             <tr>
-                                <th class="border border-slate-200 py-3 px-3">ชั้นเรียน / แผนก</th>
+                                <th class="border border-slate-200 py-3 px-3">สิทธิ์ / กลุ่มสาระการเรียนรู้</th>
                                 <th class="border border-slate-200 py-3 px-3">จำนวนทั้งหมด</th>
                                 <th class="border border-slate-200 py-3 px-3 text-emerald-600">มาปกติ</th>
                                 <th class="border border-slate-200 py-3 px-3 text-rose-600">มาสาย</th>
@@ -933,16 +946,16 @@
                         <tfoot id="summaryTableFoot" class="bg-slate-50 font-extrabold"></tfoot>
                     </table>
 
-                    <h4 class="font-extrabold text-slate-800 text-sm mb-3">รายละเอียดรายบุคคล</h4>
+                    <h4 class="font-extrabold text-slate-800 text-sm mb-3">รายละเอียดการลงเวลารายบุคคล</h4>
                     <table class="w-full text-left border-collapse border border-slate-200 text-sm font-semibold" id="dailyDetailTable">
                         <thead class="bg-slate-900 text-white text-xs uppercase">
                             <tr>
                                 <th class="py-3 px-3">รหัส</th>
                                 <th class="py-3 px-3">ชื่อ-นามสกุล</th>
-                                <th class="py-3 px-3">สิทธิ์/ชั้น</th>
-                                <th class="py-3 px-3">กิจกรรม</th>
-                                <th class="py-3 px-3">เวลาเข้า</th>
-                                <th class="py-3 px-3">เวลาออก</th>
+                                <th class="py-3 px-3">สิทธิ์ / กลุ่มสาระฯ</th>
+                                <th class="py-3 px-3">ประเภทการลงเวลา</th>
+                                <th class="py-3 px-3">เวลาเช้า</th>
+                                <th class="py-3 px-3">เวลาเย็น</th>
                                 <th class="py-3 px-3">ระยะ GPS (ม.)</th>
                                 <th class="py-3 px-3">สถานะ</th>
                             </tr>
@@ -953,8 +966,9 @@
 
                 <!-- Monthly Matrix Report View -->
                 <div id="monthlyReportView" class="hidden">
-                    <h2 class="text-center text-xl font-extrabold text-slate-900 mb-2">ตารางสรุปเวลาเรียน/เวลาทำงานรายเดือน (Matrix)</h2>
-                    <p class="text-center text-xs font-bold text-slate-500 mb-6">สัญลักษณ์: ✔ = มาปกติ | สาย = มาสาย | ช่องว่าง = ยังไม่ลงชื่อ</p>
+                    <h2 class="text-center text-xl font-extrabold text-slate-900 mb-1">ตารางสรุปเวลาปฏิบัติราชการครูรายเดือน (Matrix)</h2>
+                    <p class="text-center text-xs font-extrabold text-indigo-600 mb-1">โรงเรียนบ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี (สพป.เพชรบุรี เขต 2)</p>
+                    <p class="text-center text-xs font-bold text-slate-500 mb-6">สัญลักษณ์: ✔ = มาปกติ (06:30-08:00 น.) | สาย = มาสาย (หลัง 08:00 น.) | ช่องว่าง = ยังไม่ลงชื่อ</p>
                     <div class="overflow-x-auto">
                         <table class="w-full text-center border-collapse border border-slate-200 text-xs font-bold" id="monthlyTable">
                             <thead id="monthlyThead" class="bg-slate-50"></thead>
@@ -966,7 +980,7 @@
         </div>
 
         <!-- ==================================================================
-             TAB 6: ตั้งค่าระบบ DYNAMIC CONFIGURATION (สำหรับ Admin)
+             TAB 6: ตั้งค่าระบบ DYNAMIC CONFIGURATION (สำหรับ Admin / หัวหน้าฝ่ายบุคคล)
              ================================================================== -->
         <div id="tab-settings" class="tab-pane hidden space-y-6">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -976,7 +990,7 @@
                         <div>
                             <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
                                 <i class="fa-solid fa-sliders text-indigo-600"></i>
-                                ตั้งค่าระยะทาง พิกัดโรงเรียน และเวลาตัดสาย (Dynamic Config)
+                                ตั้งค่าระยะทาง พิกัด รร.บ้านทุ่งขาม และเวลาลงเวลาเช้า-เย็น (Dynamic Config)
                             </h3>
                             <p class="text-xs text-slate-500 font-medium">บันทึกค่าลงชีต Config ทันทีโดยไม่ต้องแก้ไขโค้ด</p>
                         </div>
@@ -989,32 +1003,46 @@
                                 1. ระยะทางสูงสุดที่อนุญาตให้ลงเวลาได้ (เมตร)
                             </label>
                             <div class="flex gap-2 mb-2 flex-wrap">
-                                <button type="button" onclick="$('#cfgDistance').val(50)" class="px-3 py-1 bg-slate-100 hover:bg-indigo-50 rounded-lg text-xs font-bold">50 ม.</button>
                                 <button type="button" onclick="$('#cfgDistance').val(100)" class="px-3 py-1 bg-slate-100 hover:bg-indigo-50 rounded-lg text-xs font-bold">100 ม.</button>
-                                <button type="button" onclick="$('#cfgDistance').val(120)" class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold">120 ม. (ค่าเริ่มต้น)</button>
+                                <button type="button" onclick="$('#cfgDistance').val(200)" class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-lg text-xs font-bold">200 ม. (ค่าเริ่มต้น)</button>
                                 <button type="button" onclick="$('#cfgDistance').val(300)" class="px-3 py-1 bg-slate-100 hover:bg-indigo-50 rounded-lg text-xs font-bold">300 ม.</button>
+                                <button type="button" onclick="$('#cfgDistance').val(500)" class="px-3 py-1 bg-slate-100 hover:bg-indigo-50 rounded-lg text-xs font-bold">500 ม.</button>
                                 <button type="button" onclick="$('#cfgDistance').val(1000)" class="px-3 py-1 bg-slate-100 hover:bg-indigo-50 rounded-lg text-xs font-bold">1,000 ม.</button>
                                 <button type="button" onclick="$('#cfgDistance').val(50000)" class="px-3 py-1 bg-amber-100 text-amber-800 rounded-lg text-xs font-bold">50 กม. (สำหรับทดสอบ)</button>
                             </div>
-                            <input type="number" id="cfgDistance" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-extrabold text-slate-900" value="120">
+                            <input type="number" id="cfgDistance" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-extrabold text-slate-900" value="200">
                         </div>
 
-                        <!-- Cutoff Time Config -->
-                        <div>
-                            <label class="block text-xs font-extrabold text-slate-700 mb-1.5">
-                                2. เวลาตัดสถานะ "มาสาย" อัตโนมัติ (บันทึกหลังจากเวลานี้ถือว่าสาย)
-                            </label>
-                            <input type="time" id="cfgStartTime" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-extrabold text-slate-900" value="08:00">
+                        <!-- Morning & Evening Time Windows Config -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                                <label class="block text-xs font-extrabold text-emerald-700 mb-1.5">
+                                    2. เริ่มเปิดลงเวลาเช้า
+                                </label>
+                                <input type="time" id="cfgCheckInStartTime" class="w-full bg-emerald-50/50 border border-emerald-200 rounded-xl p-3 font-extrabold text-slate-900" value="06:30">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-rose-700 mb-1.5">
+                                    3. สิ้นสุดเวลาเช้าปกติ (ตัดสาย)
+                                </label>
+                                <input type="time" id="cfgStartTime" class="w-full bg-rose-50/50 border border-rose-200 rounded-xl p-3 font-extrabold text-slate-900" value="08:00">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-extrabold text-indigo-700 mb-1.5">
+                                    4. เริ่มเปิดลงเวลาเย็น (กลับ)
+                                </label>
+                                <input type="time" id="cfgCheckOutStartTime" class="w-full bg-indigo-50/50 border border-indigo-200 rounded-xl p-3 font-extrabold text-slate-900" value="16:30">
+                            </div>
                         </div>
 
                         <!-- School Coordinates -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs font-extrabold text-slate-700 mb-1.5">3. พิกัดโรงเรียน (Latitude)</label>
+                                <label class="block text-xs font-extrabold text-slate-700 mb-1.5">5. พิกัด รร.บ้านทุ่งขาม (Latitude)</label>
                                 <input type="number" step="any" id="cfgSchoolLat" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-extrabold text-slate-900">
                             </div>
                             <div>
-                                <label class="block text-xs font-extrabold text-slate-700 mb-1.5">4. พิกัดโรงเรียน (Longitude)</label>
+                                <label class="block text-xs font-extrabold text-slate-700 mb-1.5">6. พิกัด รร.บ้านทุ่งขาม (Longitude)</label>
                                 <input type="number" step="any" id="cfgSchoolLon" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-extrabold text-slate-900">
                             </div>
                         </div>
@@ -1034,10 +1062,10 @@
                 <div class="lg:col-span-5 space-y-6">
                     <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80">
                         <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2 mb-4">
-                            <i class="fa-solid fa-layer-group text-indigo-600"></i> จัดการรายการกิจกรรม
+                            <i class="fa-solid fa-layer-group text-indigo-600"></i> จัดการประเภทการลงเวลาปฏิบัติราชการ
                         </h3>
                         <div class="flex gap-2 mb-4">
-                            <input type="text" id="newAct" placeholder="ชื่อกิจกรรมใหม่..." class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 font-bold text-sm">
+                            <input type="text" id="newAct" placeholder="ประเภทการลงเวลาใหม่..." class="flex-1 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 font-bold text-sm">
                             <button onclick="addActivity()" class="bg-slate-900 text-white px-5 py-2.5 rounded-xl font-extrabold text-sm">เพิ่ม</button>
                         </div>
                         <div id="actList" class="space-y-2 max-h-56 overflow-y-auto"></div>
@@ -1047,7 +1075,7 @@
                         <h3 class="text-base font-extrabold text-rose-600 flex items-center gap-2 mb-2">
                             <i class="fa-solid fa-triangle-exclamation"></i> พื้นที่อันตราย (Danger Zone)
                         </h3>
-                        <p class="text-xs text-slate-500 font-medium mb-4">การล้างประวัติจะลบข้อมูลการเช็คชื่อทั้งหมดในชีต Attendance</p>
+                        <p class="text-xs text-slate-500 font-medium mb-4">การล้างประวัติจะลบข้อมูลการลงเวลาทั้งหมดในชีต Attendance</p>
                         <button onclick="confirmClearHistory()" class="w-full py-3 bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-300 rounded-xl font-extrabold text-sm transition">
                             ล้างประวัติการลงเวลาทั้งหมด
                         </button>
@@ -1062,36 +1090,46 @@
      MODALS (Quick Config Modal, Face Login Modal, API URL Setup Modal)
      ====================================================================== -->
 
-<!-- 1. Quick Dynamic Config Modal (Admin) -->
+<!-- 1. Quick Dynamic Config Modal (Admin / หัวหน้าฝ่ายบุคคล) -->
 <div id="configModal" class="custom-modal-backdrop">
     <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl animate__animated animate__zoomIn animate__faster">
         <div class="flex justify-between items-center mb-4">
             <h3 class="text-lg font-extrabold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-gear text-indigo-600"></i> ตั้งค่าระบบด่วน (Dynamic Config)
+                <i class="fa-solid fa-gear text-indigo-600"></i> ตั้งค่าระบบด่วน (รร.บ้านทุ่งขาม)
             </h3>
             <button onclick="closeConfigModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold">&times;</button>
         </div>
-        <div class="space-y-4">
+        <div class="space-y-3.5">
             <div>
                 <label class="block text-xs font-extrabold text-slate-600 mb-1">ระยะทางสูงสุดที่อนุญาต (เมตร)</label>
-                <input type="number" id="modalConfigDistance" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-extrabold text-slate-900" value="120">
+                <input type="number" id="modalConfigDistance" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-extrabold text-slate-900" value="200">
             </div>
-            <div>
-                <label class="block text-xs font-extrabold text-slate-600 mb-1">เวลาเข้าเรียน/เข้างาน (หลังจากนี้ถือว่า "สาย")</label>
-                <input type="time" id="modalConfigTime" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 font-extrabold text-slate-900" value="08:00">
+            <div class="grid grid-cols-3 gap-2">
+                <div>
+                    <label class="block text-[11px] font-extrabold text-emerald-700 mb-1">เริ่มลงเวลาเช้า</label>
+                    <input type="time" id="modalConfigCheckInStart" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-extrabold text-xs text-slate-900" value="06:30">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-extrabold text-rose-700 mb-1">ตัดสาย (เช้า)</label>
+                    <input type="time" id="modalConfigTime" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-extrabold text-xs text-slate-900" value="08:00">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-extrabold text-indigo-700 mb-1">เริ่มลงเวลาเย็น</label>
+                    <input type="time" id="modalConfigCheckOutStart" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2 font-extrabold text-xs text-slate-900" value="16:30">
+                </div>
             </div>
             <div class="grid grid-cols-2 gap-2">
                 <div>
-                    <label class="block text-xs font-extrabold text-slate-600 mb-1">Latitude โรงเรียน</label>
+                    <label class="block text-xs font-extrabold text-slate-600 mb-1">Latitude รร.บ้านทุ่งขาม</label>
                     <input type="number" step="any" id="modalConfigLat" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-sm">
                 </div>
                 <div>
-                    <label class="block text-xs font-extrabold text-slate-600 mb-1">Longitude โรงเรียน</label>
+                    <label class="block text-xs font-extrabold text-slate-600 mb-1">Longitude รร.บ้านทุ่งขาม</label>
                     <input type="number" step="any" id="modalConfigLon" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 font-bold text-sm">
                 </div>
             </div>
             <button type="button" onclick="useMyLocationInModal()" class="w-full py-2 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-extrabold">
-                <i class="fa-solid fa-location-crosshairs mr-1"></i> ใช้พิกัดปัจจุบันของฉันเป็นจุดเช็คอิน
+                <i class="fa-solid fa-location-crosshairs mr-1"></i> ใช้พิกัดปัจจุบันของฉันเป็นจุดเช็คอินโรงเรียน
             </button>
             <button type="button" id="btnSaveConfigModal" onclick="saveConfigFromModal()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-extrabold text-sm shadow-lg shadow-indigo-100">
                 บันทึกการตั้งค่า
@@ -1171,12 +1209,20 @@ let usersDB = [];
 let attendanceDB = [];
 let todayRecordsDB = [];
 let todayLocationsDB = [];
-let activities = ['ลงเวลาประจำวัน', 'เข้าแถวหน้าเสาธง', 'โฮมรูม', 'กิจกรรมพิเศษ'];
+let activities = [
+    'ลงเวลาปฏิบัติราชการปกติ',
+    'ปฏิบัติหน้าที่เวรประจำวัน',
+    'ราชการนอกสถานที่ / อบรม',
+    'กิจกรรมพิเศษของโรงเรียน'
+];
 
-let schoolLat = (window.APP_CONFIG && window.APP_CONFIG.SCHOOL_LAT) || 17.211246;
-let schoolLon = (window.APP_CONFIG && window.APP_CONFIG.SCHOOL_LON) || 102.4470575;
-let maxAllowedDistance = (window.APP_CONFIG && window.APP_CONFIG.MAX_DISTANCE) || 120;
+let schoolLat = (window.APP_CONFIG && window.APP_CONFIG.SCHOOL_LAT) || 12.676513;
+let schoolLon = (window.APP_CONFIG && window.APP_CONFIG.SCHOOL_LON) || 99.773547;
+let maxAllowedDistance = (window.APP_CONFIG && window.APP_CONFIG.MAX_DISTANCE) || 200;
+let checkInStartTime = (window.APP_CONFIG && window.APP_CONFIG.CHECKIN_START_TIME) || '06:30';
 let attendanceStartTime = (window.APP_CONFIG && window.APP_CONFIG.START_TIME) || '08:00';
+let checkOutStartTime = (window.APP_CONFIG && window.APP_CONFIG.CHECKOUT_START_TIME) || '16:30';
+let bypassTimeWindowFlag = false;
 
 let isModelsLoaded = false;
 let matcher = null;
@@ -1370,36 +1416,63 @@ async function callApi(action, payload = {}) {
 /* ============================================================================
    3. LOCAL DEMO DATABASE ENGINE (ทำงานเหมือน Code.gs ทุกประการหากยังไม่ใส่ API_URL)
    ============================================================================ */
+const DEMO_USERS_KEY = 'DEMO_USERS_BTK_V1';
+const DEMO_CONFIG_KEY = 'DEMO_CONFIG_BTK_V1';
+const DEMO_ATT_KEY = 'DEMO_ATTENDANCE_BTK_V1';
+
+function timeStrToMinutes(hm) {
+    const [h, m] = String(hm || '00:00').replace('.', ':').split(':').map(n => parseInt(n, 10) || 0);
+    return h * 60 + m;
+}
+
+function isAdminOrHrRole(role) {
+    const r = String(role || '').trim();
+    return r === 'Admin' || r === 'หัวหน้าฝ่ายบุคคล';
+}
+
+function isExecutiveRole(role) {
+    const r = String(role || '').trim();
+    return r === 'ผู้บริหาร';
+}
+
 function initLocalDemoStorageIfNeeded() {
-    if (!localStorage.getItem('DEMO_USERS')) {
+    if (!localStorage.getItem(DEMO_USERS_KEY)) {
         const seedUsers = [
-            { id: 'ADM001', employeeID: 'ADM001', password: 'pass123', name: 'ดร.สิทธิชาติ ผู้ดูแลระบบ', role: 'Admin', sClass: 'บริหาร', sNo: '1', descriptor: null, hasFace: false },
-            { id: 'EMP001', employeeID: 'EMP001', password: 'pass123', name: 'สมชาย ใจดี', role: 'ครู', sClass: 'ม.4/1', sNo: '1', descriptor: null, hasFace: false },
-            { id: 'EMP002', employeeID: 'EMP002', password: 'pass123', name: 'สมหญิง รักเรียน', role: 'ครู', sClass: 'ม.4/2', sNo: '2', descriptor: null, hasFace: false },
-            { id: 'STD001', employeeID: 'STD001', password: 'pass123', name: 'ประยุทธ์ วิทยา', role: 'นักเรียน', sClass: 'ม.4/1', sNo: '1', descriptor: null, hasFace: false },
-            { id: 'STD002', employeeID: 'STD002', password: 'pass123', name: 'อรุณี สว่าง', role: 'นักเรียน', sClass: 'ม.4/1', sNo: '2', descriptor: null, hasFace: false },
-            { id: 'STD003', employeeID: 'STD003', password: 'pass123', name: 'กิตติพงษ์ เก่งกาจ', role: 'นักเรียน', sClass: 'ม.4/2', sNo: '1', descriptor: null, hasFace: false }
+            { id: 'ADM001', employeeID: 'ADM001', password: 'pass123', name: 'ผู้ดูแลระบบ (Admin)', role: 'Admin', sClass: 'กลุ่มบริหารงานทั่วไป', sNo: '1', descriptor: null, hasFace: false },
+            { id: 'HR001', employeeID: 'HR001', password: 'pass123', name: 'หัวหน้าฝ่ายบุคคล', role: 'หัวหน้าฝ่ายบุคคล', sClass: 'กลุ่มบริหารงานบุคคล', sNo: '1', descriptor: null, hasFace: false },
+            { id: 'DIR001', employeeID: 'DIR001', password: 'pass123', name: 'ผู้อำนวยการโรงเรียนบ้านทุ่งขาม', role: 'ผู้บริหาร', sClass: 'ฝ่ายบริหารสถานศึกษา', sNo: '1', descriptor: null, hasFace: false },
+            { id: 'TCH001', employeeID: 'TCH001', password: 'pass123', name: 'ครูกิตติพงศ์ ตั้งใจสอน', role: 'ครู', sClass: 'กลุ่มสาระฯ ภาษาไทย', sNo: '1', descriptor: null, hasFace: false },
+            { id: 'TCH002', employeeID: 'TCH002', password: 'pass123', name: 'ครูพิมพ์ชนก รักศิษย์', role: 'ครู', sClass: 'กลุ่มสาระฯ คณิตศาสตร์', sNo: '2', descriptor: null, hasFace: false },
+            { id: 'TCH003', employeeID: 'TCH003', password: 'pass123', name: 'ครูธนดล พัฒนาการเรียนรู้', role: 'ครู', sClass: 'กลุ่มสาระฯ วิทยาศาสตร์และเทคโนโลยี', sNo: '3', descriptor: null, hasFace: false }
         ];
-        localStorage.setItem('DEMO_USERS', JSON.stringify(seedUsers));
+        localStorage.setItem(DEMO_USERS_KEY, JSON.stringify(seedUsers));
     }
-    if (!localStorage.getItem('DEMO_CONFIG')) {
-        localStorage.setItem('DEMO_CONFIG', JSON.stringify({
-            maxDistance: 120,
+    if (!localStorage.getItem(DEMO_CONFIG_KEY)) {
+        localStorage.setItem(DEMO_CONFIG_KEY, JSON.stringify({
+            schoolName: 'โรงเรียนบ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี สพป.เพชรบุรี เขต 2',
+            maxDistance: 200,
+            checkInStartTime: '06:30',
             startTime: '08:00',
-            schoolLat: 17.211246,
-            schoolLon: 102.4470575,
-            activities: ['ลงเวลาประจำวัน', 'เข้าแถวหน้าเสาธง', 'โฮมรูม', 'กิจกรรมพิเศษ']
+            checkOutStartTime: '16:30',
+            schoolLat: 12.676513,
+            schoolLon: 99.773547,
+            activities: [
+                'ลงเวลาปฏิบัติราชการปกติ',
+                'ปฏิบัติหน้าที่เวรประจำวัน',
+                'ราชการนอกสถานที่ / อบรม',
+                'กิจกรรมพิเศษของโรงเรียน'
+            ]
         }));
     }
-    if (!localStorage.getItem('DEMO_ATTENDANCE')) {
-        localStorage.setItem('DEMO_ATTENDANCE', JSON.stringify([]));
+    if (!localStorage.getItem(DEMO_ATT_KEY)) {
+        localStorage.setItem(DEMO_ATT_KEY, JSON.stringify([]));
     }
 }
 
 function localDemoApi(action, body) {
-    const users = JSON.parse(localStorage.getItem('DEMO_USERS') || '[]');
-    const cfg = JSON.parse(localStorage.getItem('DEMO_CONFIG') || '{}');
-    const att = JSON.parse(localStorage.getItem('DEMO_ATTENDANCE') || '[]');
+    const users = JSON.parse(localStorage.getItem(DEMO_USERS_KEY) || '[]');
+    const cfg = JSON.parse(localStorage.getItem(DEMO_CONFIG_KEY) || '{}');
+    const att = JSON.parse(localStorage.getItem(DEMO_ATT_KEY) || '[]');
     const today = getLocalIsoDate();
 
     const buildTodayRecords = () => {
@@ -1441,11 +1514,13 @@ function localDemoApi(action, body) {
         case 'saveSystemConfig': {
             const c = body.configData || body;
             if (c.maxDistance !== undefined) cfg.maxDistance = Number(c.maxDistance);
+            if (c.checkInStartTime !== undefined) cfg.checkInStartTime = c.checkInStartTime;
             if (c.startTime !== undefined) cfg.startTime = c.startTime;
+            if (c.checkOutStartTime !== undefined) cfg.checkOutStartTime = c.checkOutStartTime;
             if (c.schoolLat !== undefined) cfg.schoolLat = Number(c.schoolLat);
             if (c.schoolLon !== undefined) cfg.schoolLon = Number(c.schoolLon);
             if (c.activities !== undefined) cfg.activities = c.activities;
-            localStorage.setItem('DEMO_CONFIG', JSON.stringify(cfg));
+            localStorage.setItem(DEMO_CONFIG_KEY, JSON.stringify(cfg));
             return { success: true, message: 'บันทึกการตั้งค่าระบบเรียบร้อย', data: cfg };
         }
         case 'saveUser': {
@@ -1459,36 +1534,47 @@ function localDemoApi(action, body) {
                 employeeID: id,
                 password: d.password || (existing ? existing.password : 'pass123'),
                 name: d.name || (existing ? existing.name : id),
-                role: d.role || (existing ? existing.role : 'นักเรียน'),
-                sClass: d.sClass || (existing ? existing.sClass : '-'),
-                sNo: d.sNo || (existing ? existing.sNo : '-'),
+                role: d.role || (existing ? existing.role : 'ครู'),
+                sClass: d.sClass || (existing ? existing.sClass : 'ครูผู้สอน'),
+                sNo: d.sNo || (existing ? existing.sNo : '1'),
                 descriptor: descriptor,
                 hasFace: Boolean(descriptor && descriptor.length > 0)
             };
             if (idx > -1) users[idx] = newObj;
             else users.push(newObj);
-            localStorage.setItem('DEMO_USERS', JSON.stringify(users));
-            return { success: true, message: 'บันทึกข้อมูลผู้ใช้และใบหน้า AI สำเร็จ', data: newObj };
+            localStorage.setItem(DEMO_USERS_KEY, JSON.stringify(users));
+            return { success: true, message: 'บันทึกข้อมูลบุคลากรและใบหน้า AI สำเร็จ', data: newObj };
         }
         case 'deleteUser': {
             const filtered = users.filter(x => x.id.toUpperCase() !== String(body.id).toUpperCase());
-            localStorage.setItem('DEMO_USERS', JSON.stringify(filtered));
-            return { success: true, message: 'ลบผู้ใช้งานเรียบร้อย' };
+            localStorage.setItem(DEMO_USERS_KEY, JSON.stringify(filtered));
+            return { success: true, message: 'ลบบุคลากรเรียบร้อย' };
         }
         case 'recordCheckIn': {
             const p = body.payload || body;
+            const now = new Date();
+            const currentHm = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            const nowMins = timeStrToMinutes(currentHm);
+            const openMins = timeStrToMinutes(cfg.checkInStartTime || '06:30');
+
+            if (nowMins < openMins && !p.bypassTimeWindow) {
+                return {
+                    success: false,
+                    message: `ระบบเริ่มเปิดให้ลงเวลาเช้าตั้งแต่เวลา ${cfg.checkInStartTime || '06:30'} - ${cfg.startTime || '08:00'} น. (เวลาปัจจุบัน ${currentHm} น.)`
+                };
+            }
+
             const dist = Math.round(calculateDistance(p.latitude, p.longitude, cfg.schoolLat, cfg.schoolLon));
             if (dist > cfg.maxDistance) {
-                return { success: false, message: `ไม่อนุญาต: คุณอยู่นอกพื้นที่ (${dist.toLocaleString()} ม. / กำหนดไม่เกิน ${cfg.maxDistance.toLocaleString()} ม.)` };
+                return { success: false, message: `ไม่อนุญาต: คุณอยู่นอกพื้นที่โรงเรียนบ้านทุ่งขาม (${dist.toLocaleString()} ม. / กำหนดไม่เกิน ${cfg.maxDistance.toLocaleString()} ม.)` };
             }
-            const act = p.activity || 'ลงเวลาประจำวัน';
+            const act = p.activity || 'ลงเวลาปฏิบัติราชการปกติ';
             const dup = att.find(r => r.employeeID.toUpperCase() === String(p.employeeID).toUpperCase() && r.date === today && r.activity === act);
-            if (dup) return { success: false, message: `คุณได้ลงเวลาเข้าสำหรับ "${act}" วันนี้ไปแล้ว` };
+            if (dup) return { success: false, message: `คุณได้ลงเวลาเช้าสำหรับ "${act}" วันนี้ไปแล้ว` };
 
-            const now = new Date();
             const timeStr = getLocalTimeStr(now);
-            const [tH, tM] = String(cfg.startTime || '08:00').split(':').map(Number);
-            const isLate = (now.getHours() > tH || (now.getHours() === tH && now.getMinutes() > tM));
+            const lateCutoffMins = timeStrToMinutes(cfg.startTime || '08:00');
+            const isLate = nowMins > lateCutoffMins;
             const status = isLate ? 'สาย' : 'ปกติ';
 
             const rec = {
@@ -1496,7 +1582,7 @@ function localDemoApi(action, body) {
                 id: p.employeeID,
                 employeeID: p.employeeID,
                 name: p.name,
-                role: p.role || 'นักเรียน',
+                role: p.role || 'ครู',
                 sClass: p.sClass || '-',
                 activity: act,
                 date: today,
@@ -1508,23 +1594,35 @@ function localDemoApi(action, body) {
                 status: status
             };
             att.push(rec);
-            localStorage.setItem('DEMO_ATTENDANCE', JSON.stringify(att));
-            return { success: true, message: `บันทึกเวลาเข้าสำเร็จ (${status})`, data: rec };
+            localStorage.setItem(DEMO_ATT_KEY, JSON.stringify(att));
+            return { success: true, message: `บันทึกเวลาเช้าสำเร็จ (${status})`, data: rec };
         }
         case 'recordCheckOut': {
             const p = body.payload || body;
+            const now = new Date();
+            const currentHm = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+            const nowMins = timeStrToMinutes(currentHm);
+            const outOpenMins = timeStrToMinutes(cfg.checkOutStartTime || '16:30');
+
+            if (nowMins < outOpenMins && !p.bypassTimeWindow) {
+                return {
+                    success: false,
+                    message: `ระบบเริ่มเปิดให้ลงเวลาเย็นตั้งแต่เวลา ${cfg.checkOutStartTime || '16:30'} น. เป็นต้นไป (เวลาปัจจุบัน ${currentHm} น.)`
+                };
+            }
+
             if (p.latitude && p.longitude) {
                 const dist = Math.round(calculateDistance(p.latitude, p.longitude, cfg.schoolLat, cfg.schoolLon));
                 if (dist > cfg.maxDistance) {
-                    return { success: false, message: `ไม่อนุญาตให้ลงเวลาออก: คุณอยู่นอกพื้นที่ (${dist.toLocaleString()} ม.)` };
+                    return { success: false, message: `ไม่อนุญาตให้ลงเวลาเย็น: คุณอยู่นอกพื้นที่โรงเรียน (${dist.toLocaleString()} ม.)` };
                 }
             }
             const idx = att.findIndex(r => r.employeeID.toUpperCase() === String(p.employeeID).toUpperCase() && r.date === today && (!p.activity || r.activity === p.activity));
-            if (idx === -1) return { success: false, message: 'ไม่พบประวัติการลงเวลาเข้าของวันนี้' };
-            if (att[idx].timeOut) return { success: false, message: 'คุณได้บันทึกเวลาออกของวันนี้ไปแล้ว' };
-            att[idx].timeOut = getLocalTimeStr(new Date());
-            localStorage.setItem('DEMO_ATTENDANCE', JSON.stringify(att));
-            return { success: true, message: 'บันทึกเวลาออกสำเร็จ', data: { timeOut: att[idx].timeOut } };
+            if (idx === -1) return { success: false, message: 'ไม่พบประวัติการลงเวลาเช้าของวันนี้ กรุณาลงเวลาเช้าก่อน' };
+            if (att[idx].timeOut) return { success: false, message: 'คุณได้บันทึกเวลาเย็นของวันนี้ไปแล้ว' };
+            att[idx].timeOut = getLocalTimeStr(now);
+            localStorage.setItem(DEMO_ATT_KEY, JSON.stringify(att));
+            return { success: true, message: 'บันทึกเวลาเย็นสำเร็จ', data: { timeOut: att[idx].timeOut } };
         }
         case 'getTodayAttendance': {
             const rec = [...att].reverse().find(r => r.employeeID.toUpperCase() === String(body.employeeID).toUpperCase() && r.date === today);
@@ -1585,19 +1683,15 @@ function localDemoApi(action, body) {
             const [y, m] = String(body.monthStr || today.slice(0, 7)).split('-').map(Number);
             const daysInMonth = new Date(y, m, 0).getDate();
             const act = body.activity || 'all';
+            const dayNums = Array.from({ length: daysInMonth }, (_, idx) => idx + 1);
             const data = users.map(u => {
-                const daily = [];
-                let present = 0;
-                for (let d = 1; d <= daysInMonth; d++) {
+                const daily = dayNums.map(d => {
                     const iso = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
                     const found = att.find(a => a.employeeID.toUpperCase() === u.id.toUpperCase() && a.date === iso && (act === 'all' || a.activity === act));
-                    if (found) {
-                        present++;
-                        daily.push(found.status === 'สาย' ? 'สาย' : '✔');
-                    } else {
-                        daily.push('');
-                    }
-                }
+                    if (!found) return '';
+                    return found.status === 'สาย' ? 'สาย' : '✔';
+                });
+                const present = daily.filter(Boolean).length;
                 return {
                     id: u.id, name: u.name, role: u.role, sClass: u.sClass,
                     daily,
@@ -1608,10 +1702,10 @@ function localDemoApi(action, body) {
         }
         case 'saveActivities':
             cfg.activities = body.activities || [];
-            localStorage.setItem('DEMO_CONFIG', JSON.stringify(cfg));
+            localStorage.setItem(DEMO_CONFIG_KEY, JSON.stringify(cfg));
             return { success: true };
         case 'clearHistory':
-            localStorage.setItem('DEMO_ATTENDANCE', JSON.stringify([]));
+            localStorage.setItem(DEMO_ATT_KEY, JSON.stringify([]));
             return { success: true };
         default:
             return { success: true, data: {} };
@@ -1627,12 +1721,15 @@ async function refreshAllData(showToast = false) {
         if (res && res.success && res.data) {
             const d = res.data;
             if (d.config) {
-                maxAllowedDistance = Number(d.config.maxDistance) || 120;
-                attendanceStartTime = d.config.startTime || '08:00';
-                schoolLat = Number(d.config.schoolLat) || 17.211246;
-                schoolLon = Number(d.config.schoolLon) || 102.4470575;
-                if (Array.isArray(d.config.activities) && d.config.activities.length) {
-                    activities = d.config.activities;
+                maxAllowedDistance = Number(d.config.maxDistance || d.config.ALLOWED_RADIUS) || 200;
+                checkInStartTime = d.config.checkInStartTime || d.config.CHECKIN_START_TIME || '06:30';
+                attendanceStartTime = d.config.startTime || d.config.START_TIME || '08:00';
+                checkOutStartTime = d.config.checkOutStartTime || d.config.CHECKOUT_START_TIME || '16:30';
+                schoolLat = Number(d.config.schoolLat || d.config.COMPANY_LAT) || 12.676513;
+                schoolLon = Number(d.config.schoolLon || d.config.COMPANY_LON) || 99.773547;
+                const cfgActs = d.config.activities || d.config.ACTIVITIES;
+                if (Array.isArray(cfgActs) && cfgActs.length) {
+                    activities = cfgActs;
                 }
             }
             usersDB = d.users || [];
@@ -1671,12 +1768,15 @@ async function refreshAllData(showToast = false) {
 
 function updateConfigUI() {
     $('#limitDisplay').text(maxAllowedDistance.toLocaleString());
-    $('#cutoffDisplay').text(attendanceStartTime);
+    $('#morningWindowDisplay').text(`${checkInStartTime} - ${attendanceStartTime}`);
+    $('#eveningWindowDisplay').text(checkOutStartTime);
     $('#schoolLatLabel').text(Number(schoolLat).toFixed(6));
     $('#schoolLonLabel').text(Number(schoolLon).toFixed(6));
 
     $('#cfgDistance, #modalConfigDistance').val(maxAllowedDistance);
+    $('#cfgCheckInStartTime, #modalConfigCheckInStart').val(checkInStartTime);
     $('#cfgStartTime, #modalConfigTime').val(attendanceStartTime);
+    $('#cfgCheckOutStartTime, #modalConfigCheckOutStart').val(checkOutStartTime);
     $('#cfgSchoolLat, #modalConfigLat').val(schoolLat);
     $('#cfgSchoolLon, #modalConfigLon').val(schoolLon);
 
@@ -1736,7 +1836,7 @@ window.openFaceLoginModal = function () {
         return Swal.fire({
             icon: 'info',
             title: 'ยังไม่มีข้อมูลใบหน้าในระบบ',
-            text: 'กรุณาเข้าสู่ระบบด้วยรหัสผ่านครั้งแรก แล้วไปที่เมนู "ทะเบียนผู้ใช้ & ใบหน้า AI" เพื่อบันทึกใบหน้า 5 มิติก่อนใช้งานสแกนใบหน้า Login'
+            text: 'กรุณาเข้าสู่ระบบด้วยรหัสผ่านครั้งแรก แล้วไปที่เมนู "ทะเบียนครู & ใบหน้า AI" เพื่อบันทึกใบหน้า 5 มิติก่อนใช้งานสแกนใบหน้า Login'
         });
     }
     $('#faceLoginModal').addClass('open');
@@ -1765,7 +1865,7 @@ async function enterDashboard() {
 
 function updateUserRoleUI() {
     if (!userData) return;
-    const role = userData.role || 'นักเรียน';
+    const role = userData.role || 'ครู';
     const initials = (userData.name || '?').trim().charAt(0);
 
     $('#sideUserAvatar').text(initials);
@@ -1773,30 +1873,31 @@ function updateUserRoleUI() {
     $('#sideUserId').text(userData.employeeID || userData.id);
     $('#sideUserRoleBadge').text(role);
 
-    // ปรับการแสดงผลเมนูตามสิทธิ์ (Admin / ครู / นักเรียน)
-    if (role === 'Admin') {
+    // ปรับการแสดงผลเมนูตามสิทธิ์ 4 ระดับ (Admin / หัวหน้าฝ่ายบุคคล / ผู้บริหาร / ครู)
+    if (isAdminOrHrRole(role)) {
+        // Admin และ หัวหน้าฝ่ายบุคคล: จัดการระบบ ตั้งค่า และจัดการทะเบียนครูได้ทั้งหมด
         $('.role-admin-only').removeClass('hidden').addClass('flex');
         $('.role-admin-teacher').removeClass('hidden');
         $('#btnHeaderConfig').removeClass('hidden').addClass('flex');
-        $('#navUsersLabel').text('ทะเบียนผู้ใช้ & ใบหน้า AI');
+        $('#navUsersLabel').text('ทะเบียนครู & ใบหน้า AI');
         $('#regId, #regRole').prop('disabled', false);
-    } else if (role === 'ครู') {
+    } else if (isExecutiveRole(role)) {
+        // ผู้บริหาร: ดู Smart Admin Dashboard, รายงานสรุปผล, Kiosk, และจัดการข้อมูล/ใบหน้าตนเอง
         $('.role-admin-only').addClass('hidden').removeClass('flex');
         $('.role-admin-teacher').removeClass('hidden');
         $('#btnHeaderConfig').addClass('hidden').removeClass('flex');
-        $('#navUsersLabel').text('ทะเบียนนักเรียน & ใบหน้า AI');
+        $('#navUsersLabel').text('ทะเบียนครู & ใบหน้า AI');
         $('#regId, #regRole').prop('disabled', false);
     } else {
-        // นักเรียน
+        // ครู: ลงเวลาเช้า-เย็น + แผนที่ GPS + สถิติส่วนตัว + ลงทะเบียนใบหน้า AI 5 มิติของตนเอง
         $('.role-admin-only').addClass('hidden').removeClass('flex');
         $('.role-admin-teacher').addClass('hidden');
         $('#btnHeaderConfig').addClass('hidden').removeClass('flex');
         $('#navUsersLabel').text('จัดการใบหน้า AI ของฉัน');
-        // ล็อกฟอร์มลงทะเบียนใบหน้าให้เป็นของตัวเอง
         $('#regId').val(userData.employeeID).prop('disabled', true);
         $('#regPassword').val(userData.password || 'pass123');
         $('#regName').val(userData.name);
-        $('#regRole').val('นักเรียน').prop('disabled', true);
+        $('#regRole').val('ครู').prop('disabled', true);
         $('#regClass').val(userData.sClass || '');
         $('#regNo').val(userData.sNo || '');
     }
@@ -1835,14 +1936,14 @@ window.switchTab = function (tabName) {
     $(`.nav-item[data-tab="${tabName}"]`).addClass('active');
 
     const titles = {
-        dashboard: 'ลงเวลาเข้า-ออก (Check-in / Check-out) & แผนที่พิกัด GPS',
-        admin: 'Smart Admin Dashboard สรุปภาพรวมแบบ Real-time',
-        kiosk: 'จุดสแกนใบหน้าต่อเนื่อง (Kiosk Face Scanner + GPS)',
-        users: 'ทะเบียนผู้ใช้งาน & ลงทะเบียนใบหน้า AI (Multi-Shot 5 มิติ)',
-        reports: 'รายงานสรุปผลการมาเรียน/ทำงาน & ส่งออก Excel',
-        settings: 'ตั้งค่าระบบ Dynamic Configuration'
+        dashboard: 'ระบบลงเวลาปฏิบัติราชการครู (รร.บ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี)',
+        admin: 'Smart Admin Dashboard สรุปการมาปฏิบัติราชการครูแบบ Real-time',
+        kiosk: 'จุดสแกนใบหน้าลงเวลาต่อเนื่อง (Kiosk Face Scanner + GPS)',
+        users: 'ทะเบียนครูและบุคลากร & ลงทะเบียนใบหน้า AI (5 มิติ)',
+        reports: 'รายงานสรุปเวลาปฏิบัติราชการครู & ส่งออก Excel',
+        settings: 'ตั้งค่าระบบ Dynamic Configuration (รร.บ้านทุ่งขาม)'
     };
-    $('#pageTitle').text(titles[tabName] || 'ระบบเช็คชื่อและบันทึกเวลา');
+    $('#pageTitle').text(titles[tabName] || 'ระบบลงเวลาปฏิบัติราชการครู รร.บ้านทุ่งขาม');
     $('#sidebar').removeClass('show');
 
     if (tabName === 'dashboard') {
@@ -1852,7 +1953,7 @@ window.switchTab = function (tabName) {
     } else if (tabName === 'kiosk') {
         updateLiveLogByActivity();
     } else if (tabName === 'users') {
-        if (userData && userData.role === 'นักเรียน') {
+        if (userData && !isAdminOrHrRole(userData.role) && !isExecutiveRole(userData.role)) {
             prepareRecord(userData.employeeID);
         }
         startVideo('regVideo', 'register');
@@ -1884,13 +1985,13 @@ function initializeMap() {
     redrawSchoolAndCircle();
     renderAllUserPinsOnMap();
 
-    // Admin สามารถคลิกบนแผนที่เพื่อย้ายจุดเช็คอินได้ด้วย
+    // Admin และ หัวหน้าฝ่ายบุคคล สามารถคลิกบนแผนที่เพื่อย้ายจุดเช็คอินได้ด้วย
     map.on('click', function (e) {
-        if (userData && userData.role === 'Admin') {
+        if (userData && isAdminOrHrRole(userData.role)) {
             const clickedLat = Number(e.latlng.lat.toFixed(6));
             const clickedLon = Number(e.latlng.lng.toFixed(6));
             Swal.fire({
-                title: 'ตั้งพิกัดจุดเช็คอินใหม่?',
+                title: 'ตั้งพิกัดจุดเช็คอิน รร.บ้านทุ่งขาม ใหม่?',
                 html: `ต้องการเปลี่ยนจุดเช็คอินโรงเรียนมาที่พิกัด<br><b>${clickedLat}, ${clickedLon}</b> หรือไม่?`,
                 icon: 'question',
                 showCancelButton: true,
@@ -1901,7 +2002,9 @@ function initializeMap() {
                 if (r.isConfirmed) {
                     await saveSystemConfigData({
                         maxDistance: maxAllowedDistance,
+                        checkInStartTime: checkInStartTime,
                         startTime: attendanceStartTime,
+                        checkOutStartTime: checkOutStartTime,
                         schoolLat: clickedLat,
                         schoolLon: clickedLon
                     });
@@ -1925,7 +2028,7 @@ function redrawSchoolAndCircle() {
 
     schoolMarker = L.marker([schoolLat, schoolLon], { icon: schoolIcon })
         .addTo(map)
-        .bindPopup(`<b>จุดเช็คอินโรงเรียน</b><br>รัศมีที่อนุญาต: ${maxAllowedDistance.toLocaleString()} เมตร`);
+        .bindPopup(`<b>โรงเรียนบ้านทุ่งขาม อ.ชะอำ จ.เพชรบุรี</b><br>สพป.เพชรบุรี เขต 2<br>รัศมีที่อนุญาต: ${maxAllowedDistance.toLocaleString()} เมตร`);
 
     radiusCircle = L.circle([schoolLat, schoolLon], {
         color: '#10b981',
@@ -2261,7 +2364,7 @@ async function executeFaceLogin(detectedId) {
 /* ============================================================================
    9. PERSONAL CHECK-IN / CHECK-OUT WITH GPS + FACE RECOGNITION
    ============================================================================ */
-window.startPersonalFaceAction = function (actionType) {
+window.startPersonalFaceAction = async function (actionType) {
     if (!currentPosition) {
         getCurrentLocation(true);
         return Swal.fire('กำลังระบุพิกัด GPS', 'กรุณารอสักครู่และอนุญาตให้เบราว์เซอร์เข้าถึงตำแหน่งที่ตั้ง (Location)', 'warning');
@@ -2271,13 +2374,62 @@ window.startPersonalFaceAction = function (actionType) {
     if (dist > maxAllowedDistance) {
         return Swal.fire({
             icon: 'error',
-            title: 'อยู่นอกเขตพื้นที่อนุญาต!',
-            html: `คุณอยู่ห่างจากจุดเช็คอิน <b>${dist.toLocaleString()} เมตร</b><br>ระบบกำหนดให้ลงเวลาได้ในรัศมีไม่เกิน <b>${maxAllowedDistance.toLocaleString()} เมตร</b> เท่านั้น`
+            title: 'อยู่นอกเขตพื้นที่โรงเรียนบ้านทุ่งขาม!',
+            html: `คุณอยู่ห่างจากจุดเช็คอินโรงเรียน <b>${dist.toLocaleString()} เมตร</b><br>ระบบกำหนดให้ลงเวลาได้ในรัศมีไม่เกิน <b>${maxAllowedDistance.toLocaleString()} เมตร</b> เท่านั้น`
         });
     }
 
+    bypassTimeWindowFlag = false;
+    const nowTime = getLocalTimeStr();
+    const nowHM = nowTime.slice(0, 5);
+    const isAdminOrHR = userData && (userData.role === 'Admin' || userData.role === 'หัวหน้าฝ่ายบุคคล');
+
+    if (actionType === 'checkin' && nowHM < checkInStartTime) {
+        if (isAdminOrHR) {
+            const confirmBypass = await Swal.fire({
+                icon: 'question',
+                title: 'ยังไม่ถึงเวลาเปิดระบบลงเวลาเช้า',
+                html: `ระบบเริ่มเปิดให้ลงเวลาเช้าตั้งแต่ <b>${checkInStartTime} - ${attendanceStartTime} น.</b> (ขณะนี้เวลา <b>${nowTime} น.</b>)<br><br><span class="text-xs text-indigo-600 font-bold">คุณมีสิทธิ์ ${userData.role} ต้องการเปิดกล้องทดสอบลงเวลาเช้าตอนนี้เลยหรือไม่?</span>`,
+                showCancelButton: true,
+                confirmButtonText: 'ทดสอบลงเวลาเลย',
+                cancelButtonText: 'ยกเลิก'
+            });
+            if (!confirmBypass.isConfirmed) return;
+            bypassTimeWindowFlag = true;
+        } else {
+            return Swal.fire({
+                icon: 'warning',
+                title: 'ยังไม่เปิดให้ลงเวลาเช้า',
+                html: `ระบบเปิดให้ลงเวลาปฏิบัติราชการช่วงเช้าตั้งแต่เวลา <b>${checkInStartTime} - ${attendanceStartTime} น.</b><br>(หลัง ${attendanceStartTime} น. ระบบตัดสถานะมาสายอัตโนมัติ)<br>ขณะนี้เวลา <b>${nowTime} น.</b>`
+            });
+        }
+    }
+
+    if (actionType === 'checkout' && nowHM < checkOutStartTime) {
+        if (isAdminOrHR) {
+            const confirmBypass = await Swal.fire({
+                icon: 'question',
+                title: 'ยังไม่ถึงเวลาลงเวลากลับ (ช่วงเย็น)',
+                html: `ระบบเริ่มเปิดให้ลงเวลากลับตั้งแต่ <b>${checkOutStartTime} น. เป็นต้นไป</b> (ขณะนี้เวลา <b>${nowTime} น.</b>)<br><br><span class="text-xs text-indigo-600 font-bold">คุณมีสิทธิ์ ${userData.role} ต้องการเปิดกล้องทดสอบลงเวลากลับตอนนี้เลยหรือไม่?</span>`,
+                showCancelButton: true,
+                confirmButtonText: 'ทดสอบลงเวลากลับเลย',
+                cancelButtonText: 'ยกเลิก'
+            });
+            if (!confirmBypass.isConfirmed) return;
+            bypassTimeWindowFlag = true;
+        } else {
+            return Swal.fire({
+                icon: 'warning',
+                title: 'ยังไม่ถึงเวลาลงเวลากลับ',
+                html: `ระบบเปิดให้ลงเวลากลับ (ช่วงเย็น) ตั้งแต่เวลา <b>${checkOutStartTime} น. เป็นต้นไป</b><br>ขณะนี้เวลา <b>${nowTime} น.</b>`
+            });
+        }
+    }
+
     personalActionMode = actionType;
-    const modeLabel = actionType === 'checkin' ? 'บันทึกเวลาเข้า (Check-in)' : 'บันทึกเวลาออก (Check-out)';
+    const modeLabel = actionType === 'checkin'
+        ? `ลงเวลาเช้า (${checkInStartTime} - ${attendanceStartTime} น.)`
+        : `ลงเวลากลับ (${checkOutStartTime} น. เป็นต้นไป)`;
     $('#personalCamSub').html(`<span class="text-indigo-600 font-bold">โหมดกำลังทำงาน: ${modeLabel} — กรุณามองกล้อง</span>`);
     startVideo('personalVideo', 'personal');
 };
@@ -2286,7 +2438,7 @@ async function executePersonalAttendance() {
     stopVideo();
     playBeep();
 
-    const act = $('#personalActivitySelect').val() || 'ลงเวลาประจำวัน';
+    const act = $('#personalActivitySelect').val() || 'ลงเวลาปฏิบัติราชการ';
     const dist = Math.round(calculateDistance(currentPosition.latitude, currentPosition.longitude, schoolLat, schoolLon));
 
     $.LoadingOverlay('show', { text: 'กำลังบันทึกเวลาและพิกัด GPS ลง Google Sheets...' });
@@ -2300,7 +2452,8 @@ async function executePersonalAttendance() {
                 activity: act,
                 latitude: currentPosition.latitude,
                 longitude: currentPosition.longitude,
-                distance: dist
+                distance: dist,
+                bypassTimeWindow: bypassTimeWindowFlag
             };
             const res = await callApi('recordCheckIn', { payload });
             $.LoadingOverlay('hide');
@@ -2309,8 +2462,8 @@ async function executePersonalAttendance() {
                 confetti({ particleCount: 110, spread: 70, origin: { y: 0.6 } });
                 Swal.fire({
                     icon: 'success',
-                    title: 'บันทึกเวลาเข้าสำเร็จ!',
-                    html: `<b>${userData.name}</b><br>เวลาเข้า: <b>${res.data.timeIn}</b> | สถานะ: <b>${res.data.status}</b><br>ระยะห่าง GPS: ${dist.toLocaleString()} เมตร`,
+                    title: 'บันทึกเวลาเข้าเช้าสำเร็จ!',
+                    html: `<b>${userData.name}</b><br>เวลาเข้า: <b>${res.data.timeIn} น.</b> | สถานะ: <b>${res.data.status}</b><br>ระยะห่างจากจุดเช็คอิน: ${dist.toLocaleString()} เมตร`,
                     timer: 2800
                 });
                 await refreshAllData(false);
@@ -2323,7 +2476,8 @@ async function executePersonalAttendance() {
                 activity: act,
                 latitude: currentPosition.latitude,
                 longitude: currentPosition.longitude,
-                distance: dist
+                distance: dist,
+                bypassTimeWindow: bypassTimeWindowFlag
             };
             const res = await callApi('recordCheckOut', { payload });
             $.LoadingOverlay('hide');
@@ -2332,8 +2486,8 @@ async function executePersonalAttendance() {
                 confetti({ particleCount: 90, spread: 60, origin: { y: 0.6 } });
                 Swal.fire({
                     icon: 'success',
-                    title: 'บันทึกเวลาออกสำเร็จ!',
-                    html: `<b>${userData.name}</b><br>เวลาออก: <b>${res.data.timeOut}</b>`,
+                    title: 'บันทึกเวลากลับสำเร็จ!',
+                    html: `<b>${userData.name}</b><br>เวลาออก: <b>${res.data.timeOut} น.</b>`,
                     timer: 2500
                 });
                 await refreshAllData(false);
@@ -2387,7 +2541,7 @@ async function loadUserStatistics() {
                 $tbody.append(`
                     <tr class="hover:bg-slate-50">
                         <td class="py-3 px-4 font-bold text-slate-800">${r.date}</td>
-                        <td class="py-3 px-4 text-indigo-600">${r.activity || 'ลงเวลาประจำวัน'}</td>
+                        <td class="py-3 px-4 text-indigo-600">${r.activity || 'ลงเวลาปฏิบัติราชการ'}</td>
                         <td class="py-3 px-4 text-emerald-700 font-bold">${r.timeIn || '-'}</td>
                         <td class="py-3 px-4 text-rose-600 font-bold">${r.timeOut || '-'}</td>
                         <td class="py-3 px-4 text-slate-500">${r.distance !== undefined && r.distance !== '-' ? r.distance + ' ม.' : '-'}</td>
@@ -2419,7 +2573,7 @@ window.startKioskSession = function () {
     }
     const dist = Math.round(calculateDistance(currentPosition.latitude, currentPosition.longitude, schoolLat, schoolLon));
     if (dist > maxAllowedDistance) {
-        return Swal.fire('อยู่นอกพื้นที่โรงเรียน', `จุดสแกนนี้ห่างจากโรงเรียน ${dist.toLocaleString()} ม. (เกินระยะ ${maxAllowedDistance.toLocaleString()} ม.)`, 'error');
+        return Swal.fire('อยู่นอกพื้นที่โรงเรียน', `จุดสแกนนี้ห่างจากโรงเรียนบ้านทุ่งขาม ${dist.toLocaleString()} ม. (เกินระยะ ${maxAllowedDistance.toLocaleString()} ม.)`, 'error');
     }
     $('#btnStartKiosk').addClass('hidden');
     $('#btnStopKiosk').removeClass('hidden');
@@ -2435,7 +2589,7 @@ window.stopKioskSession = function () {
 
 async function executeKioskAttendance(uid) {
     const mode = $('#kioskModeSelect').val() || 'checkin';
-    const act = $('#activitySelect').val() || 'ลงเวลาประจำวัน';
+    const act = $('#activitySelect').val() || 'ลงเวลาปฏิบัติราชการ';
     const todayKey = `${uid}_${mode}_${act}_${getLocalIsoDate()}`;
     if (sessionLog.has(todayKey)) return;
 
@@ -2459,9 +2613,12 @@ async function executeKioskAttendance(uid) {
         });
         if (res.success) {
             confetti({ particleCount: 80, origin: { x: 0.8, y: 0.5 } });
-            Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: u.name, text: `ลงเวลาเข้าสำเร็จ (${res.data.status})`, showConfirmButton: false, timer: 2500 });
+            Swal.fire({ toast: true, position: 'top-end', icon: 'success', title: u.name, text: `ลงเวลาเช้าสำเร็จ (${res.data.status})`, showConfirmButton: false, timer: 2500 });
             prependKioskLog(u.name, res.data.timeIn, res.data.status, 'เข้า');
             await refreshAllData(false);
+        } else {
+            sessionLog.delete(todayKey);
+            Swal.fire({ toast: true, position: 'top-end', icon: 'warning', title: u.name, text: res.message, showConfirmButton: false, timer: 3000 });
         }
     } else {
         const res = await callApi('recordCheckOut', {
@@ -2473,9 +2630,12 @@ async function executeKioskAttendance(uid) {
             }
         });
         if (res.success) {
-            Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: u.name, text: `ลงเวลาออกสำเร็จ (${res.data.timeOut})`, showConfirmButton: false, timer: 2500 });
+            Swal.fire({ toast: true, position: 'top-end', icon: 'info', title: u.name, text: `ลงเวลากลับสำเร็จ (${res.data.timeOut})`, showConfirmButton: false, timer: 2500 });
             prependKioskLog(u.name, res.data.timeOut, 'ปกติ', 'ออก');
             await refreshAllData(false);
+        } else {
+            sessionLog.delete(todayKey);
+            Swal.fire({ toast: true, position: 'top-end', icon: 'warning', title: u.name, text: res.message, showConfirmButton: false, timer: 3000 });
         }
     }
 }
@@ -2603,13 +2763,13 @@ window.registerStudent = async function (captureFace = true) {
     const id = $('#regId').val().trim();
     const password = $('#regPassword').val().trim() || 'pass123';
     const name = $('#regName').val().trim();
-    const role = $('#regRole').val() || 'นักเรียน';
+    const role = $('#regRole').val() || 'ครู';
     const sClass = $('#regClass').val().trim() || '-';
     const sNo = $('#regNo').val().trim() || '-';
     const v = document.getElementById('regVideo');
 
     if (!id || !name) {
-        return Swal.fire('ข้อมูลไม่ครบ', 'กรุณากรอกรหัสประจำตัวและชื่อ-นามสกุล', 'warning');
+        return Swal.fire('ข้อมูลไม่ครบ', 'กรุณากรอกรหัสบุคลากรและชื่อ-นามสกุล', 'warning');
     }
 
     let avgDescriptor = null;
@@ -2654,7 +2814,7 @@ window.registerStudent = async function (captureFace = true) {
             return Swal.fire('เกิดข้อผิดพลาดขณะสแกนใบหน้า', err.message, 'error');
         }
     } else {
-        $.LoadingOverlay('show', { text: 'กำลังบันทึกข้อมูลผู้ใช้งาน...' });
+        $.LoadingOverlay('show', { text: 'กำลังบันทึกข้อมูลครูและบุคลากร...' });
     }
 
     try {
@@ -2666,7 +2826,7 @@ window.registerStudent = async function (captureFace = true) {
             playBeep();
             confetti({ particleCount: 120, origin: { y: 0.6 } });
             Swal.fire('สำเร็จ!', res.message || 'บันทึกข้อมูลและใบหน้า AI เรียบร้อยแล้ว', 'success');
-            if (userData && userData.role !== 'นักเรียน') {
+            if (userData && (userData.role === 'Admin' || userData.role === 'หัวหน้าฝ่ายบุคคล')) {
                 $('#regForm')[0].reset();
                 $('#regPassword').val('pass123');
             }
@@ -2690,18 +2850,22 @@ function renderStudentTable(filterText = '') {
         String(s.role).toLowerCase().includes(q)
     );
 
-    const canDelete = userData && userData.role === 'Admin';
+    const canDelete = userData && (userData.role === 'Admin' || userData.role === 'หัวหน้าฝ่ายบุคคล');
     const $tbody = $('#studentTableBody').empty();
 
     if (list.length === 0) {
-        $tbody.html('<tr><td colspan="5" class="py-12 text-center text-slate-400">ไม่พบข้อมูลผู้ใช้งาน</td></tr>');
+        $tbody.html('<tr><td colspan="5" class="py-12 text-center text-slate-400">ไม่พบข้อมูลครูและบุคลากร</td></tr>');
         return;
     }
 
     list.forEach(s => {
-        const roleBadge = s.role === 'Admin'
-            ? 'bg-violet-100 text-violet-700'
-            : (s.role === 'ครู' ? 'bg-indigo-100 text-indigo-700' : 'bg-sky-100 text-sky-700');
+        const roleBadgeMap = {
+            'Admin': 'bg-violet-100 text-violet-700',
+            'หัวหน้าฝ่ายบุคคล': 'bg-emerald-100 text-emerald-700',
+            'ผู้บริหาร': 'bg-amber-100 text-amber-800',
+            'ครู': 'bg-indigo-100 text-indigo-700'
+        };
+        const roleBadge = roleBadgeMap[s.role] || 'bg-sky-100 text-sky-700';
 
         const faceBadge = s.hasFace
             ? '<span class="px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-700"><i class="fa-solid fa-check mr-1"></i>พร้อมสแกน (Ready)</span>'
@@ -2722,7 +2886,7 @@ function renderStudentTable(filterText = '') {
                             <i class="fa-solid fa-camera"></i>
                         </button>
                         ${canDelete ? `
-                        <button onclick="confirmDelete('${s.id}', '${s.name}')" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg text-xs" title="ลบผู้ใช้">
+                        <button onclick="confirmDelete('${s.id}', '${s.name}')" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg text-xs" title="ลบรายชื่อบุคลากร">
                             <i class="fa-solid fa-trash"></i>
                         </button>` : ''}
                     </div>
@@ -2740,14 +2904,14 @@ window.prepareRecord = function (id) {
     $('#regId').val(s.id);
     $('#regPassword').val(s.password || 'pass123');
     $('#regName').val(s.name);
-    $('#regRole').val(s.role || 'นักเรียน');
+    $('#regRole').val(s.role || 'ครู');
     $('#regClass').val(s.sClass || '');
     $('#regNo').val(s.sNo || '');
 };
 
 window.confirmDelete = function (id, name) {
     Swal.fire({
-        title: 'ยืนยันการลบผู้ใช้?',
+        title: 'ยืนยันการลบข้อมูลบุคลากร?',
         text: `ต้องการลบ "${name}" (${id}) ออกจากระบบหรือไม่?`,
         icon: 'warning',
         showCancelButton: true,
@@ -2802,27 +2966,47 @@ window.setSchoolToCurrentGPS = async function () {
     }
     await saveSystemConfigData({
         maxDistance: maxAllowedDistance,
+        checkInStartTime: checkInStartTime,
         startTime: attendanceStartTime,
+        checkOutStartTime: checkOutStartTime,
         schoolLat: Number(currentPosition.latitude.toFixed(6)),
         schoolLon: Number(currentPosition.longitude.toFixed(6))
     });
 };
 
 window.saveConfigFromModal = async function () {
-    const newDist = Number($('#modalConfigDistance').val()) || 120;
+    const newDist = Number($('#modalConfigDistance').val()) || 200;
+    const newCheckInStart = $('#modalConfigCheckInStart').val() || '06:30';
     const newTime = $('#modalConfigTime').val() || '08:00';
+    const newCheckOutStart = $('#modalConfigCheckOutStart').val() || '16:30';
     const newLat = Number($('#modalConfigLat').val()) || schoolLat;
     const newLon = Number($('#modalConfigLon').val()) || schoolLon;
     closeConfigModal();
-    await saveSystemConfigData({ maxDistance: newDist, startTime: newTime, schoolLat: newLat, schoolLon: newLon });
+    await saveSystemConfigData({
+        maxDistance: newDist,
+        checkInStartTime: newCheckInStart,
+        startTime: newTime,
+        checkOutStartTime: newCheckOutStart,
+        schoolLat: newLat,
+        schoolLon: newLon
+    });
 };
 
 window.saveSettingsFromTab = async function () {
-    const newDist = Number($('#cfgDistance').val()) || 120;
+    const newDist = Number($('#cfgDistance').val()) || 200;
+    const newCheckInStart = $('#cfgCheckInStartTime').val() || '06:30';
     const newTime = $('#cfgStartTime').val() || '08:00';
+    const newCheckOutStart = $('#cfgCheckOutStartTime').val() || '16:30';
     const newLat = Number($('#cfgSchoolLat').val()) || schoolLat;
     const newLon = Number($('#cfgSchoolLon').val()) || schoolLon;
-    await saveSystemConfigData({ maxDistance: newDist, startTime: newTime, schoolLat: newLat, schoolLon: newLon });
+    await saveSystemConfigData({
+        maxDistance: newDist,
+        checkInStartTime: newCheckInStart,
+        startTime: newTime,
+        checkOutStartTime: newCheckOutStart,
+        schoolLat: newLat,
+        schoolLon: newLon
+    });
 };
 
 async function saveSystemConfigData(configData) {
@@ -2840,8 +3024,8 @@ async function saveSystemConfigData(configData) {
             Swal.fire({
                 icon: 'success',
                 title: 'บันทึกการตั้งค่าสำเร็จ!',
-                html: `ระยะทางอนุญาต: <b>${maxAllowedDistance.toLocaleString()} ม.</b> | เวลาตัดสาย: <b>${attendanceStartTime} น.</b>`,
-                timer: 2000,
+                html: `ระยะทางอนุญาต: <b>${maxAllowedDistance.toLocaleString()} ม.</b><br>ลงเวลาเช้า: <b>${checkInStartTime} - ${attendanceStartTime} น.</b> | ลงเวลาเย็น: <b>${checkOutStartTime} น. เป็นต้นไป</b>`,
+                timer: 2200,
                 showConfirmButton: false
             });
         }
