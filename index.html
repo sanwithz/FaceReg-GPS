@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ระบบเช็คชื่อและบันทึกเวลา + GPS ด้วยใบหน้า AI | สื่อและนวัตกรรมครูสิทธิชาติ</title>
+    <title>ระบบเช็คชื่อและบันทึกเวลา + GPS ด้วยใบหน้า</title>
 
     <!-- Google Fonts: Sarabun -->
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -210,43 +210,43 @@
 <body>
 
 <!-- ======================================================================
-     1. LOGIN SECTION (Monochrome Style - แยกสิทธิ์ Admin, ครู, นักเรียน + สแกนใบหน้า Login)
+     1. LOGIN SECTION (แยกสิทธิ์ Admin, ครู, นักเรียน + สแกนใบหน้า Login)
      ====================================================================== -->
-<section id="loginSection" class="min-h-screen flex items-center justify-center p-4 bg-zinc-100">
-    <div class="bg-white rounded-[2rem] shadow-2xl border border-zinc-200 w-full max-w-md overflow-hidden animate__animated animate__fadeInUp">
-        <!-- Login Header (Monochrome Black/Zinc) -->
-        <div class="bg-zinc-950 p-8 text-center text-white relative border-b border-zinc-800">
-            <button onclick="openApiModal()" class="absolute top-4 right-4 bg-white/10 hover:bg-white/20 border border-white/15 text-zinc-200 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 transition" title="ตั้งค่า Google Apps Script API">
-                <span id="apiStatusDot" class="w-2 h-2 rounded-full bg-white"></span>
+<section id="loginSection" class="min-h-screen flex items-center justify-center p-4 bg-[#f1f5f9]">
+    <div class="bg-white rounded-[2rem] shadow-2xl border border-slate-200/80 w-full max-w-md overflow-hidden animate__animated animate__fadeInUp">
+        <!-- Login Header (Solid Indigo matching Dashboard) -->
+        <div class="bg-indigo-600 p-8 text-center text-white relative">
+            <button onclick="openApiModal()" class="absolute top-4 right-4 bg-white/15 hover:bg-white/25 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 transition" title="ตั้งค่า Google Apps Script API">
+                <span id="apiStatusDot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
                 <span id="apiStatusLabel">ตั้งค่า API</span>
             </button>
 
-            <h1 class="text-2xl mt-12 font-extrabold tracking-tight text-white">ระบบเช็คชื่อและบันทึกเวลา + GPS</h1>
-            <p class="text-zinc-400 text-sm mt-1 font-medium">Time Attendance with GPS via Face Recognition</p>
+            <h1 class="text-2xl mt-12 font-extrabold tracking-tight">ระบบเช็คชื่อและบันทึกเวลา + GPS</h1>
+            <p class="text-indigo-100 text-sm mt-1 font-medium">Time Attendance with GPS via Face Recognition</p>
         </div>
 
         <!-- Login Body -->
         <div class="p-7">
-            <!-- Quick Demo Accounts (Monochrome) -->
-            <div class="bg-zinc-50 border border-zinc-200 rounded-2xl p-4 mb-5">
-                <div class="flex items-center justify-between mb-2.5">
-                    <span class="text-xs font-extrabold text-zinc-800 uppercase tracking-wider flex items-center gap-1.5">
-                        <i class="fa-solid fa-bolt text-zinc-900"></i> ทดสอบเข้าสู่ระบบด่วน (คลิกเลือกสิทธิ์)
+            <!-- Quick Demo Accounts -->
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 mb-5">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-extrabold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-bolt text-amber-500"></i> ทดสอบเข้าสู่ระบบด่วน (คลิกเลือกสิทธิ์)
                     </span>
-                    <span class="text-[11px] font-bold text-zinc-500">รหัสผ่าน: pass123</span>
+                    <span class="text-[11px] font-bold text-amber-700">รหัสผ่าน: pass123</span>
                 </div>
                 <div class="grid grid-cols-3 gap-2">
-                    <button type="button" onclick="quickFillLogin('ADM001', 'pass123')" class="bg-white hover:bg-zinc-900 group border border-zinc-200 hover:border-zinc-900 rounded-xl p-2 text-center transition shadow-sm">
-                        <div class="text-xs font-extrabold text-zinc-900 group-hover:text-white transition">Admin</div>
-                        <div class="text-[10px] text-zinc-500 group-hover:text-zinc-300 font-bold transition">ADM001</div>
+                    <button type="button" onclick="quickFillLogin('ADM001', 'pass123')" class="bg-white hover:bg-indigo-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
+                        <div class="text-xs font-extrabold text-indigo-700">Admin</div>
+                        <div class="text-[10px] text-slate-500 font-bold">ADM001</div>
                     </button>
-                    <button type="button" onclick="quickFillLogin('EMP001', 'pass123')" class="bg-white hover:bg-zinc-900 group border border-zinc-200 hover:border-zinc-900 rounded-xl p-2 text-center transition shadow-sm">
-                        <div class="text-xs font-extrabold text-zinc-900 group-hover:text-white transition">ครูอาจารย์</div>
-                        <div class="text-[10px] text-zinc-500 group-hover:text-zinc-300 font-bold transition">EMP001</div>
+                    <button type="button" onclick="quickFillLogin('EMP001', 'pass123')" class="bg-white hover:bg-emerald-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
+                        <div class="text-xs font-extrabold text-emerald-700">ครูอาจารย์</div>
+                        <div class="text-[10px] text-slate-500 font-bold">EMP001</div>
                     </button>
-                    <button type="button" onclick="quickFillLogin('STD001', 'pass123')" class="bg-white hover:bg-zinc-900 group border border-zinc-200 hover:border-zinc-900 rounded-xl p-2 text-center transition shadow-sm">
-                        <div class="text-xs font-extrabold text-zinc-900 group-hover:text-white transition">นักเรียน</div>
-                        <div class="text-[10px] text-zinc-500 group-hover:text-zinc-300 font-bold transition">STD001</div>
+                    <button type="button" onclick="quickFillLogin('STD001', 'pass123')" class="bg-white hover:bg-sky-50 border border-amber-200 rounded-xl p-2 text-center transition shadow-sm">
+                        <div class="text-xs font-extrabold text-sky-700">นักเรียน</div>
+                        <div class="text-[10px] text-slate-500 font-bold">STD001</div>
                     </button>
                 </div>
             </div>
@@ -254,39 +254,39 @@
             <!-- Login Form -->
             <form id="loginForm" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">รหัสประจำตัว (Admin / ครู / นักเรียน)</label>
+                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">รหัสประจำตัว (Admin / ครู / นักเรียน)</label>
                     <div class="relative">
-                        <i class="fa-solid fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+                        <i class="fa-solid fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         <input type="text" id="loginId" required autocomplete="username" placeholder="เช่น ADM001, EMP001, STD001"
-                            class="w-full pl-11 pr-4 py-3.5 bg-zinc-50 border border-zinc-200 rounded-xl font-bold text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 focus:bg-white transition">
+                            class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-zinc-700 uppercase tracking-wider mb-1.5">รหัสผ่าน (Password)</label>
+                    <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">รหัสผ่าน (Password)</label>
                     <div class="relative">
-                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"></i>
+                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
                         <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="กรอกรหัสผ่าน"
-                            class="w-full pl-11 pr-4 py-3.5 bg-zinc-50 border border-zinc-200 rounded-xl font-bold text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 focus:bg-white transition">
+                            class="w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl font-bold text-slate-800 focus:outline-none focus:border-indigo-600 focus:bg-white transition">
                     </div>
                 </div>
 
-                <button type="submit" id="btnLogin" class="w-full py-3.5 bg-zinc-950 hover:bg-zinc-800 text-white font-extrabold rounded-xl shadow-lg shadow-zinc-200 transition flex items-center justify-center gap-2 text-base">
+                <button type="submit" id="btnLogin" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold rounded-xl shadow-lg shadow-indigo-200 transition flex items-center justify-center gap-2 text-base">
                     <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบด้วยรหัสผ่าน
                 </button>
             </form>
 
-            <div class="relative my-5 text-center">
-t               <div class="border-t border-zinc-200"></div>
-                <span class="bg-white px-3 text-xs font-bold text-zinc-400 -top-2.5 relative">หรือเข้าสู่ระบบด้วย AI</span>
+            <div class="relative my-5 text-center" style="display:none">
+                <div class="border-t border-slate-200"></div>
+                <span class="bg-white px-3 text-xs font-bold text-slate-400 -top-2.5 relative">หรือเข้าสู่ระบบด้วย AI</span>
             </div>
 
-            <!-- AI Face Login Button (Monochrome Outline) -->
-            <button type="button" onclick="openFaceLoginModal()" class="w-full py-3 bg-white hover:bg-zinc-100 text-zinc-900 border-2 border-zinc-900 font-extrabold rounded-xl transition flex items-center justify-center gap-2 text-sm">
-                <i class="fa-solid fa-face-viewfinder text-zinc-900 text-lg"></i> สแกนใบหน้าเพื่อเข้าสู่ระบบ (AI Face Login)
+            <!-- AI Face Login Button -->
+            <button type="button" onclick="openFaceLoginModal()" class="w-full py-3 bg-slate-900 hover:bg-black text-white font-bold rounded-xl transition flex items-center justify-center gap-2 text-sm shadow">
+                <i class="fa-solid fa-face-viewfinder text-emerald-400 text-lg"></i> สแกนใบหน้าเพื่อเข้าสู่ระบบ (AI Face Login)
             </button>
 
-            <p class="text-center text-[11px] text-zinc-400 font-bold mt-6">
-                พัฒนาโดย <span class="text-zinc-900 underline underline-offset-2">สื่อและนวัตกรรมครูสิทธิชาติ</span>
+            <p class="text-center text-[11px] text-slate-400 font-bold mt-6">
+                พัฒนาโดย <span class="text-indigo-600">สื่อและนวัตกรรมครูสิทธิชาติ</span>
             </p>
         </div>
     </div>
@@ -1297,11 +1297,11 @@ function isGASContext() {
 function updateApiStatusUI() {
     const connected = isRealApiConfigured() || isGASContext();
     if (connected) {
-        $('#apiStatusDot').removeClass('bg-zinc-500').addClass('bg-white');
+        $('#apiStatusDot').removeClass('bg-amber-300').addClass('bg-emerald-400');
         $('#apiStatusLabel').text('เชื่อมต่อ Google Sheets แล้ว');
         $('#sideApiStatus').text('Google Sheets').removeClass('bg-amber-100 text-amber-800').addClass('bg-emerald-100 text-emerald-700');
     } else {
-        $('#apiStatusDot').removeClass('bg-white').addClass('bg-zinc-500');
+        $('#apiStatusDot').removeClass('bg-emerald-400').addClass('bg-amber-300');
         $('#apiStatusLabel').text('โหมดจำลอง (ตั้งค่า API)');
         $('#sideApiStatus').text('Demo Mode').removeClass('bg-emerald-100 text-emerald-700').addClass('bg-amber-100 text-amber-800');
     }
